@@ -9,5 +9,8 @@ import java.util.List;
 public interface UserService {
     User getUser(Long id);
 
-    User createNewUser(String name, EmailAddress emailAddress, Password password);
+    User getUserByUsername(String username);
+    User createNewUser(User user);
+
+    boolean existsByUsername(String username);
 }

@@ -1,7 +1,9 @@
 package com.backand.tracker.services;
 
-public interface AuthService {
-    void authorization();
+import com.backand.tracker.domains.User;
 
-    void registration();
+public interface AuthService {
+    String authorization(String username, String password);
+
+    void registration(User user);
 }

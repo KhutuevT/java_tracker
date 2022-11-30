@@ -19,26 +19,26 @@ public class TaskRestControllerV1 {
     }
 
     @GetMapping()
-    private ResponseEntity get(){
+    ResponseEntity get(){
         return null;
     }
 
     @PostMapping()
-    private ResponseEntity add(@RequestBody AddTaskReqDto reqDto) {
+    ResponseEntity add(@RequestBody AddTaskReqDto reqDto) {
         Long userId = 1L;
         taskService.createNewTask(reqDto.getName(), reqDto.getDescriptions(), userId);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     @PostMapping("/start/{id}")
-    private ResponseEntity start(@PathVariable("id") Long taskId){
+    ResponseEntity start(@PathVariable("id") Long taskId){
         Long userId = 1L;
         taskService.start(taskId, userId);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     @PostMapping("/stop/{id}")
-    private ResponseEntity stop(@PathVariable("id") Long taskId){
+    ResponseEntity stop(@PathVariable("id") Long taskId){
         Long userId = 1L;
         taskService.stop(taskId, userId);
         return new ResponseEntity("OK", HttpStatus.OK);
