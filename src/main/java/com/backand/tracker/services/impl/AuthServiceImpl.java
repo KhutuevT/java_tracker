@@ -1,6 +1,6 @@
 package com.backand.tracker.services.impl;
 
-import com.backand.tracker.domains.User;
+import com.backand.tracker.domains.user.User;
 import com.backand.tracker.exceptions.UserAlreadyExistException;
 import com.backand.tracker.security.jwt.JwtTokenProvider;
 import com.backand.tracker.services.AuthService;

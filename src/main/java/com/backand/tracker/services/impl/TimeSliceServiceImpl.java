@@ -1,7 +1,7 @@
 package com.backand.tracker.services.impl;
 
 import com.backand.tracker.domains.primitives.TimePoint;
-import com.backand.tracker.domains.TimeSlice;
+import com.backand.tracker.domains.task.TimeSlice;
 import com.backand.tracker.services.TimeSliceService;
 import org.springframework.stereotype.Service;
 

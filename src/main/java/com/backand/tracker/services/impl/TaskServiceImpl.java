@@ -1,6 +1,6 @@
 package com.backand.tracker.services.impl;
 
-import com.backand.tracker.domains.Task;
+import com.backand.tracker.domains.task.Task;
 import com.backand.tracker.services.TaskService;
 import org.springframework.stereotype.Service;
 

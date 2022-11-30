@@ -1,6 +1,6 @@
 package com.backand.tracker.services;
 
-import com.backand.tracker.domains.Project;
+import com.backand.tracker.domains.project.Project;
 
 public interface ProjectService {
     /**
@@ -34,4 +34,6 @@ public interface ProjectService {
      * @param employeeUserId
      */
     void deleteEmployeeInProject(Long projectId, Long projectOwnerId, Long employeeUserId);
+
+    Project getById(Long id);
 }

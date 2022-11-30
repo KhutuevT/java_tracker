@@ -42,7 +42,9 @@ class ProjectRestControllerV1Test {
     void getById() throws Exception {
         this.mockMvc
                 .perform(get("/api/v1/projects/1"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(status().isOk());
+                //.andExpect(content().json("{}"));
     }
 
     @Test

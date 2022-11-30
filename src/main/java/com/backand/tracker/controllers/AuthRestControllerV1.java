@@ -1,6 +1,6 @@
 package com.backand.tracker.controllers;
 
-import com.backand.tracker.domains.User;
+import com.backand.tracker.domains.user.User;
 import com.backand.tracker.domains.primitives.EmailAddress;
 import com.backand.tracker.domains.primitives.Password;
 import com.backand.tracker.dtos.req.AuthReqDto;

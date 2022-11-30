@@ -1,8 +1,6 @@
 package com.backand.tracker.services.impl;
 
-import com.backand.tracker.domains.User;
-import com.backand.tracker.domains.primitives.EmailAddress;
-import com.backand.tracker.domains.primitives.Password;
+import com.backand.tracker.domains.user.User;
 import com.backand.tracker.repositories.UserRepository;
 import com.backand.tracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.backand.tracker.repositories;
 
-import com.backand.tracker.domains.User;
+import com.backand.tracker.domains.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

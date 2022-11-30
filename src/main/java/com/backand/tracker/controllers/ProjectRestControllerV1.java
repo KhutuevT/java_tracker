@@ -24,7 +24,7 @@ public class ProjectRestControllerV1 {
 
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Long id) {
-        return null;
+        return new ResponseEntity(projectService.getById(id), HttpStatus.OK);
     }
 
 

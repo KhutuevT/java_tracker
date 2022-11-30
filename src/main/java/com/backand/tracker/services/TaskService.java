@@ -1,7 +1,6 @@
 package com.backand.tracker.services;
 
-import com.backand.tracker.domains.Task;
-import com.backand.tracker.dtos.req.AddTaskReqDto;
+import com.backand.tracker.domains.task.Task;
 
 public interface TaskService {
     /**

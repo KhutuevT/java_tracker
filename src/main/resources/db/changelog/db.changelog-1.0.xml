@@ -42,11 +42,15 @@
                 <constraints nullable="false" unique="true"/>
             </column>
 
-            <column name="descriptions" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
+            <column name="descriptions" type="VARCHAR(1000)">
+                <constraints nullable="false" unique="false"/>
             </column>
 
-            <column name="user_id" type="BIGINT">
+            <column name="created" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP" defaultValue="now()">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -62,11 +66,19 @@
                 <constraints nullable="false" unique="true" />
             </column>
 
-            <column name="description" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true" />
+            <column name="description" type="VARCHAR(1000)">
+                <constraints nullable="false" unique="false" />
             </column>
 
-            <column name="user_id" type="BIGINT">
+            <column name="project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP" defaultValue="now()">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -93,31 +105,146 @@
             <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
     <changeSet id="1.4.0" author="tamerlan.khutuev">
-        <addForeignKeyConstraint baseTableName="projects"
-                                 baseColumnNames="user_id"
-                                 constraintName="fk_user_projects_projects"
-                                 referencedTableName="users"
-                                 referencedColumnNames="id"
-                                 />
+        <createTable tableName="project_roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" />
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
     <changeSet id="1.5.0" author="tamerlan.khutuev">
-        <addForeignKeyConstraint baseTableName="tasks"
-                                 baseColumnNames="user_id"
-                                 constraintName="fk_user_projects_projects"
-                                 referencedTableName="users"
-                                 referencedColumnNames="id"/>
+        <createTable tableName="task_roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" />
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
-    <changeSet id="1.6.0" author="tamerlan.knutuev">
-        <addForeignKeyConstraint baseTableName="time_slice"
-                                 baseColumnNames="user_id"
-                                 constraintName="fk_user_time_slice_time_slice"
-                                 referencedTableName="users"
-                                 referencedColumnNames="id"/>
+    <changeSet id="1.6.0" author="tamerlan.khutuev">
+        <createTable tableName="user_task_roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_task_roles_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
+
+    <changeSet id="1.7.0" author="tamerlan.khutuev">
+        <createTable tableName="user_project_roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_project_roles_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="TIMESTAMP" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+<!--    <changeSet id="1.8.0" author="tamerlan.khutuev">-->
+<!--        <addForeignKeyConstraint baseTableName="projects"-->
+<!--                                 baseColumnNames="user_id"-->
+<!--                                 constraintName="fk_user_projects_projects"-->
+<!--                                 referencedTableName="users"-->
+<!--                                 referencedColumnNames="id"/>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="1.9.0" author="tamerlan.khutuev">-->
+<!--        <addForeignKeyConstraint baseTableName="tasks"-->
+<!--                                 baseColumnNames="user_id"-->
+<!--                                 constraintName="fk_user_projects_projects"-->
+<!--                                 referencedTableName="users"-->
+<!--                                 referencedColumnNames="id"/>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="1.10.0" author="tamerlan.khutuev">-->
+<!--        <addForeignKeyConstraint baseTableName="time_slice"-->
+<!--                                 baseColumnNames="user_id"-->
+<!--                                 constraintName="fk_user_time_slice_time_slice"-->
+<!--                                 referencedTableName="users"-->
+<!--                                 referencedColumnNames="id"/>-->
+<!--    </changeSet>-->
 </databaseChangeLog>
