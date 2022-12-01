@@ -5,6 +5,7 @@ import com.backand.tracker.domains.task.Task;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -13,13 +14,16 @@ import java.util.List;
 public class Project extends BaseEntity {
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "descriptions")
-    String descriptions;
+    private String descriptions;
 
     @OneToMany(fetch = FetchType.LAZY)
-    List<Task> tasks;
+    private Collection<Task> tasks;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<UserProject> userProjects;
 
     @Deprecated
     public Project(){
@@ -32,11 +36,4 @@ public class Project extends BaseEntity {
         this.name = name;
         this.descriptions = descriptions;
     }
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User owner;
-
-//    @OneToMany(fetch = FetchType.LAZY)
-//    List<User> users;
 }

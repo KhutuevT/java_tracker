@@ -6,8 +6,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * Описывает таски юзера
+ * (созданные им, или если на него повесили таску)
+ */
 @Data
-@Table(name = "user_task_roles")
+@Table(name = "user_tasks")
 @Entity
 public class UserTask extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
@@ -19,8 +23,8 @@ public class UserTask extends BaseEntity {
     private Task task;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_task_roles_id")
-    private UserTask role;
+    @JoinColumn(name = "task_role_id")
+    private TaskRole role;
 
     @Deprecated
     public UserTask(){
@@ -29,7 +33,7 @@ public class UserTask extends BaseEntity {
     public UserTask(
             User user,
             Task task,
-            UserTask role
+            TaskRole role
     ) {
         this.user = user;
         this.task = task;

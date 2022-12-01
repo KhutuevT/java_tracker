@@ -7,6 +7,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * Описывает "затреканный" промежуток времени
+ * определённым юзером в определённой таске.
+ */
 @Entity
 @Table(name = "time_slice")
 @Data

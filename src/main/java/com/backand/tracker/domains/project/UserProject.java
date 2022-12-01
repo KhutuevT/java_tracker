@@ -6,8 +6,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * Описывает проекты юзера
+ * (созданные им или если его добавили в проект)
+ */
 @Data
-@Table(name = "user_project_roles")
+@Table(name = "user_projects")
 @Entity
 public class UserProject extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
@@ -19,8 +23,8 @@ public class UserProject extends BaseEntity {
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_project_roles_id")
-    private UserProject role;
+    @JoinColumn(name = "project_role_id")
+    private ProjectRole role;
 
     @Deprecated
     public UserProject(){
@@ -29,7 +33,7 @@ public class UserProject extends BaseEntity {
     public UserProject(
             User user,
             Project project,
-            UserProject role
+            ProjectRole role
     ) {
         this.user = user;
         this.project = project;
