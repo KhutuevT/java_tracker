@@ -17,15 +17,33 @@ public class ProjectRestControllerV1 {
         this.projectService = projectService;
     }
 
-    @GetMapping("/test")
-    public ResponseEntity test(){
-        return new ResponseEntity("Test", HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Long id) {
         return new ResponseEntity(projectService.getById(id), HttpStatus.OK);
     }
 
+    @PostMapping()
+    public ResponseEntity createNewProject() {
+        return null;
+    }
 
+    @PostMapping("/employee")
+    public ResponseEntity addEmployeeInProject() {
+        return null;
+    }
+
+    @DeleteMapping("/employee")
+    public ResponseEntity deleteEmployeeInProject() {
+        return null;
+    }
+
+    @PostMapping("/permission-in-role")
+    public ResponseEntity addPermissionsInRole() {
+        return null;
+    }
+
+    @DeleteMapping("/permission-in-role")
+    public ResponseEntity deletePermissionsInRole() {
+        return null;
+    }
 }

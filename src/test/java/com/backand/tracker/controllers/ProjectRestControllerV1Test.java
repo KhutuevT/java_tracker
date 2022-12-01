@@ -46,12 +46,4 @@ class ProjectRestControllerV1Test {
                 .andExpect(status().isOk());
                 //.andExpect(content().json("{}"));
     }
-
-    @Test
-    void test() throws Exception {
-        this.mockMvc
-                .perform(get("/api/v1/projects/test"))
-                .andDo(print())
-                .andExpect(status().isForbidden());
-    }
 }

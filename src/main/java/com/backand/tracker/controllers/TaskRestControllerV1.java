@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/v1/tasks")
+@RequestMapping(value = "/api/v1/projects/tasks")
 public class TaskRestControllerV1 {
 
     TaskService taskService;
@@ -30,15 +30,15 @@ public class TaskRestControllerV1 {
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
-    @PostMapping("/start/{id}")
-    ResponseEntity start(@PathVariable("id") Long taskId){
+    @PostMapping("/{taskId}/start")
+    ResponseEntity start(@PathVariable Long taskId){
         Long userId = 1L;
         taskService.start(taskId, userId);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
-    @PostMapping("/stop/{id}")
-    ResponseEntity stop(@PathVariable("id") Long taskId){
+    @PostMapping("/{taskId}/stop")
+    ResponseEntity stop(@PathVariable Long taskId){
         Long userId = 1L;
         taskService.stop(taskId, userId);
         return new ResponseEntity("OK", HttpStatus.OK);

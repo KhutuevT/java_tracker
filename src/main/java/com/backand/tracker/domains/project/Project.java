@@ -25,6 +25,9 @@ public class Project extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserProject> userProjects;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<ProjectRole> projectRoles;
+
     @Deprecated
     public Project(){
     }

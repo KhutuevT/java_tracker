@@ -23,11 +23,9 @@ public class TaskRole extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User creator;
 
-//    @ElementCollection(targetClass = TaskPermissionsEnum.class)
-//    @Enumerated(EnumType.STRING)
-//    @CollectionTable(name = "task_role_permissions")
-//    @Column(name = "permissions")
-//    private Collection<TaskPermissionsEnum> permissions;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")
+    private Task task;
 
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<TaskRolePermissions> taskRolePermissions;

@@ -28,6 +28,9 @@ public class Task extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserTask> userTasks;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<TaskRole> taskRoles;
+
     @Deprecated
     public Task(){
     }

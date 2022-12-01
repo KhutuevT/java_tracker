@@ -1,5 +1,6 @@
-package com.backand.tracker.security;
+package com.backand.tracker.config;
 
+import com.backand.tracker.security.CustomAuthenticationEntryPoint;
 import com.backand.tracker.security.jwt.JwtConfigurer;
 import com.backand.tracker.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,10 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(LOGIN_ENDPOINT, REGISTER_ENDPOINT).permitAll()
+                .antMatchers(LOGIN_ENDPOINT, REGISTER_ENDPOINT, "/swagger-ui/**", "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/v2/api-docs",
+                        "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())

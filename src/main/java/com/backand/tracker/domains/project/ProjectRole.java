@@ -22,11 +22,9 @@ public class ProjectRole extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User creator;
 
-//    @ElementCollection(targetClass = ProjectPermissionsEnum.class)
-//    @Enumerated(EnumType.STRING)
-//    @CollectionTable(name = "project_role_permissions")
-//    @Column(name = "permissions")
-//    private Collection<ProjectPermissionsEnum> permissions;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<ProjectRolePermissions> projectRolePermissions;
