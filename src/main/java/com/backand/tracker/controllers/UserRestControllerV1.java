@@ -1,5 +1,6 @@
 package com.backand.tracker.controllers;
 
+import com.backand.tracker.repositories.UserRepository;
 import com.backand.tracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/v1/users")
 public class UserRestControllerV1 {
 
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserRestControllerV1(UserService userService) {
@@ -20,7 +21,8 @@ public class UserRestControllerV1 {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity getById(@PathVariable Long id) {
+    ResponseEntity getById(
+            @PathVariable Long id) {
         return null;
     }
 }

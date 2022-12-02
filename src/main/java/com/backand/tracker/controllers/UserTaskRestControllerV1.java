@@ -2,7 +2,7 @@ package com.backand.tracker.controllers;
 
 import com.backand.tracker.domains.user.User;
 import com.backand.tracker.repositories.UserRepository;
-import com.backand.tracker.services.ProjectRolePermissionsService;
+import com.backand.tracker.services.UserTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,36 +13,36 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(value = "/api/v1/projects/{projectId}/roles/{roleId}/permissions")
-public class ProjectRolePermissionsRestControllerV1 {
+@RequestMapping(value = "/api/v1/projects/{projectId}/tasks/{taskID}/user-tasks")
+public class UserTaskRestControllerV1 {
 
     private UserRepository userRepository;
-    private ProjectRolePermissionsService projectRolePermissionsService;
+    private UserTaskService userTaskService;
 
     @Autowired
-    public ProjectRolePermissionsRestControllerV1(
+    public UserTaskRestControllerV1(
             UserRepository userRepository,
-            ProjectRolePermissionsService projectRolePermissionsService
+            UserTaskService userTaskService
     ) {
         this.userRepository = userRepository;
-        this.projectRolePermissionsService = projectRolePermissionsService;
+        this.userTaskService = userTaskService;
     }
 
     @GetMapping()
-    public ResponseEntity getProjectRolesPermissions(
-            @PathVariable Long projectId,
-            @PathVariable Long roleId,
+    public ResponseEntity get(
+            @PathVariable String projectId,
+            @PathVariable String taskID,
             Principal principal
     ) {
         User user = userRepository.findByUsername(principal.getName()).get();
         return null;
     }
 
-    @GetMapping("/{permissionsId}")
-    public ResponseEntity getProjectRolesPermissionsById(
-            @PathVariable Long projectId,
-            @PathVariable Long roleId,
-            @PathVariable Long permissionsId,
+    @GetMapping("/{userTaskId}")
+    public ResponseEntity getById(
+            @PathVariable String projectId,
+            @PathVariable String taskID,
+            @PathVariable String userTaskId,
             Principal principal
     ) {
         User user = userRepository.findByUsername(principal.getName()).get();

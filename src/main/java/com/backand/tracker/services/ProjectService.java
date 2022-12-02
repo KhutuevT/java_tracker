@@ -1,23 +1,23 @@
 package com.backand.tracker.services;
 
 import com.backand.tracker.domains.project.Project;
+import com.backand.tracker.domains.user.User;
 
 public interface ProjectService {
     /**
      * Создаёт новый проект.
      * @param name
      * @param descriptions
-     * @param projectOwnerUserId
      * @return
      */
-    Project createNewProject(String name, String descriptions, Long projectOwnerUserId);
+    Project createNewProject(User user, String name, String descriptions);
 
     /**
      * Удаляет проект
      * @param projectId
      * @param projectOwnerUserId
      */
-    void deleteProject(Long projectId, Long projectOwnerUserId);
+    void deleteProject(User user, Long projectId, Long projectOwnerUserId);
 
     /**
      * Добавить работника в проект.
@@ -25,7 +25,7 @@ public interface ProjectService {
      * @param projectOwnerId
      * @param employeeUserId
      */
-    void addEmployeeInProject(Long projectId, Long projectOwnerId, Long employeeUserId);
+    void addEmployeeInProject(User user, Long projectId, Long projectOwnerId, Long employeeUserId);
 
     /**
      * Удалить работника из проекта.
@@ -33,7 +33,7 @@ public interface ProjectService {
      * @param projectOwnerId
      * @param employeeUserId
      */
-    void deleteEmployeeInProject(Long projectId, Long projectOwnerId, Long employeeUserId);
+    void deleteEmployeeInProject(User user, Long projectId, Long projectOwnerId, Long employeeUserId);
 
-    Project getById(Long id);
+    Project getById(User user, Long id);
 }

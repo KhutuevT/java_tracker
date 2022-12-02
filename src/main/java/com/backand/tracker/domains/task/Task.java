@@ -2,6 +2,7 @@ package com.backand.tracker.domains.task;
 
 import com.backand.tracker.domains.BaseEntity;
 import com.backand.tracker.domains.project.Project;
+import com.backand.tracker.domains.user.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,10 @@ public class Task extends BaseEntity {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User creator;
+
     @OneToMany(fetch = FetchType.LAZY)
     private List<TimeSlice> timeSlices;
 
@@ -38,10 +43,12 @@ public class Task extends BaseEntity {
     public Task(
             String name,
             String description,
-            Project project
+            Project project,
+            User creator
     ) {
         this.name = name;
         this.description = description;
         this.project = project;
+        this.creator = creator;
     }
 }
