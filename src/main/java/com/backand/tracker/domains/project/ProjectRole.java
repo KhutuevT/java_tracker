@@ -2,6 +2,7 @@ package com.backand.tracker.domains.project;
 
 import com.backand.tracker.domains.BaseEntity;
 import com.backand.tracker.domains.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import liquibase.pro.packaged.O;
 import lombok.Data;
 
@@ -26,9 +27,11 @@ public class ProjectRole extends BaseEntity {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<ProjectRolePermissions> projectRolePermissions;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserProject> userProjects;
 
@@ -39,9 +42,10 @@ public class ProjectRole extends BaseEntity {
     public ProjectRole(
             String name,
             User creator,
-            Collection<ProjectPermissionsEnum> permissions
+            Project project
     ) {
         this.name = name;
         this.creator = creator;
+        this.project = project;
     }
 }

@@ -2,6 +2,7 @@ package com.backand.tracker.domains.task;
 
 import com.backand.tracker.domains.BaseEntity;
 import com.backand.tracker.domains.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import liquibase.pro.packaged.F;
 import liquibase.pro.packaged.O;
 import lombok.Data;
@@ -27,9 +28,11 @@ public class TaskRole extends BaseEntity {
     @JoinColumn(name = "task_id")
     private Task task;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<TaskRolePermissions> taskRolePermissions;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserTask> userTasks;
 

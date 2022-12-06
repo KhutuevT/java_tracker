@@ -9,8 +9,10 @@ import com.backand.tracker.domains.project.UserProject;
 import com.backand.tracker.domains.task.TaskRole;
 import com.backand.tracker.domains.task.TimeSlice;
 import com.backand.tracker.domains.task.UserTask;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -31,18 +33,28 @@ public class User extends BaseEntity {
     @AttributeOverride(name = "password", column = @Column(name = "password"))
     private Password password;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<ProjectRole> createdProjectRoles;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<TaskRole> createdTaskRoles;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserTask> userTasks;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserProject> userProjects;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<TimeSlice> timeSlices;
 

@@ -1,9 +1,12 @@
 package com.backand.tracker.controllers;
 
+import com.backand.tracker.domains.task.TimeSlice;
 import com.backand.tracker.domains.user.User;
+import com.backand.tracker.dtos.req.TimeSliceStartReqDto;
 import com.backand.tracker.repositories.UserRepository;
 import com.backand.tracker.services.TimeSliceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,26 +46,30 @@ public class TimeSliceRestControllerV1 {
             Principal principal
     ) {
         User user = userRepository.findByUsername(principal.getName()).get();
-        return null;
+        TimeSlice timeSlice = timeSliceService.getById(timeSliceId);
+        return new ResponseEntity(timeSlice, HttpStatus.OK);
     }
 
-    @PostMapping("/{timeSliceId}/start")
+    @PostMapping("/start")
     ResponseEntity start(
             @PathVariable Long projectId,
             @PathVariable Long taskId,
+            @RequestBody TimeSliceStartReqDto reqDto,
             Principal principal
     ){
         User user = userRepository.findByUsername(principal.getName()).get();
-        return null;
+        TimeSlice timeSlice = timeSliceService.start(user, projectId, taskId, reqDto.getName());
+        return new ResponseEntity(timeSlice, HttpStatus.OK);
     }
 
-    @PostMapping("/{timeSliceId}/stop")
+    @PostMapping("/stop")
     ResponseEntity stop(
             @PathVariable Long projectId,
             @PathVariable Long taskId,
             Principal principal
     ){
         User user = userRepository.findByUsername(principal.getName()).get();
-        return null;
+        TimeSlice timeSlice = timeSliceService.stop(user, projectId, taskId);
+        return new ResponseEntity(timeSlice, HttpStatus.OK);
     }
 }

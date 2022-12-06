@@ -3,7 +3,9 @@ package com.backand.tracker.domains.project;
 import com.backand.tracker.domains.BaseEntity;
 import com.backand.tracker.domains.task.Task;
 import com.backand.tracker.domains.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -24,12 +26,18 @@ public class Project extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User creator;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<Task> tasks;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserProject> userProjects;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<ProjectRole> projectRoles;
 
@@ -39,9 +47,11 @@ public class Project extends BaseEntity {
 
     public Project(
             String name,
-            String descriptions
+            String descriptions,
+            User creator
     ) {
         this.name = name;
         this.descriptions = descriptions;
+        this.creator = creator;
     }
 }

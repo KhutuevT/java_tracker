@@ -20,10 +20,12 @@ public class TimeSlice extends BaseEntity {
 
     @Embedded
     @AttributeOverride(name = "timePoint", column = @Column(name = "start_time_point"))
+    @Temporal(TemporalType.TIMESTAMP)
     private TimePoint startTimePoint;
 
     @Embedded
     @AttributeOverride(name = "timePoint", column = @Column(name = "end_time_point"))
+    @Temporal(TemporalType.TIMESTAMP)
     private TimePoint endTimePoint;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,13 +43,13 @@ public class TimeSlice extends BaseEntity {
     public TimeSlice(
             String name,
             TimePoint startTimePoint,
-            TimePoint endTimePoint,
+            //TimePoint endTimePoint,
             Task task,
             User user
     ) {
         this.name = name;
         this.startTimePoint = startTimePoint;
-        this.endTimePoint = endTimePoint;
+        //this.endTimePoint = endTimePoint;
         this.task = task;
         this.user = user;
     }

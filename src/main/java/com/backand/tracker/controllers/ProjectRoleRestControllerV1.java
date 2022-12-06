@@ -1,13 +1,18 @@
 package com.backand.tracker.controllers;
 
+import com.backand.tracker.domains.project.ProjectRole;
 import com.backand.tracker.domains.user.User;
+import com.backand.tracker.dtos.req.CreateProjectRoleReqDto;
 import com.backand.tracker.repositories.UserRepository;
 import com.backand.tracker.services.ProjectRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/projects/{projectId}/roles")
@@ -31,7 +36,8 @@ public class ProjectRoleRestControllerV1 {
             Principal principal
     ) {
         User user = userRepository.findByUsername(principal.getName()).get();
-        return null;
+        Collection<ProjectRole> projectRole = projectRoleService.getAllByProject(user, projectId);
+        return new ResponseEntity(projectRole, HttpStatus.OK);
     }
 
     @GetMapping("/{roleId}")
@@ -46,11 +52,13 @@ public class ProjectRoleRestControllerV1 {
 
     @PostMapping()
     public ResponseEntity addNew(
-            @PathVariable String projectId,
+            @PathVariable Long projectId,
+            @RequestBody CreateProjectRoleReqDto reqDto,
             Principal principal
     ) {
         User user = userRepository.findByUsername(principal.getName()).get();
-        return null;
+        ProjectRole projectRole = projectRoleService.createNew(reqDto.getName(), user, projectId);
+        return new ResponseEntity(projectRole, HttpStatus.OK);
     }
 
     @DeleteMapping("/{roleId}")

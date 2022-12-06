@@ -9,6 +9,8 @@ import com.backand.tracker.services.UserProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
@@ -24,14 +26,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project createNewProject(User user, String name, String descriptions) {
-        Project project = projectRepository.save(new Project(name, descriptions));
-        userProjectService.createNewUserProject(user, project);
+        Project project = projectRepository.save(new Project(name, descriptions, user));
         return project;
     }
 
     @Override
     public Project getById(User user, Long id) {
-        Project project = projectRepository.getProjectById(id).get();
+        Project project = projectRepository.getProjectById(id).orElseThrow(()->new EntityNotFoundException("Project not found!"));
         //TODO проверить доступен ли просмотр этому юзеру
         return project;
     }
