@@ -1,6 +1,6 @@
 package com.backand.tracker.security.jwt;
 
-import com.backand.tracker.domains.user.User;
+import com.backand.tracker.modules.user.User;
 
 public class JwtUserFactory {
     public JwtUserFactory() {

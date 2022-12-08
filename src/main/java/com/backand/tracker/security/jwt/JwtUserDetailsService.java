@@ -1,7 +1,7 @@
 package com.backand.tracker.security.jwt;
 
-import com.backand.tracker.domains.user.User;
-import com.backand.tracker.services.UserService;
+import com.backand.tracker.modules.user.User;
+import com.backand.tracker.modules.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;

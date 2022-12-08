@@ -1,7 +1,7 @@
 package com.backand.tracker.security.jwt;
 
-import com.backand.tracker.domains.primitives.EmailAddress;
-import com.backand.tracker.domains.primitives.Password;
+import com.backand.tracker.modules.user.primitives.EmailAddress;
+import com.backand.tracker.modules.user.primitives.Password;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

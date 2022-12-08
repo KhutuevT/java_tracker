@@ -1,14 +1,14 @@
 package com.backand.tracker.utils;
 
-import com.backand.tracker.domains.project.Project;
-import com.backand.tracker.domains.project.ProjectPermissionsEnum;
-import com.backand.tracker.domains.project.ProjectRolePermissions;
-import com.backand.tracker.domains.project.UserProject;
-import com.backand.tracker.domains.task.Task;
-import com.backand.tracker.domains.task.TaskPermissionsEnum;
-import com.backand.tracker.domains.task.TaskRolePermissions;
-import com.backand.tracker.domains.task.UserTask;
-import com.backand.tracker.domains.user.User;
+import com.backand.tracker.modules.project.Project;
+import com.backand.tracker.modules.project_role_permission.ProjectPermissionsEnum;
+import com.backand.tracker.modules.project_role_permission.ProjectRolePermissions;
+import com.backand.tracker.modules.user_project.UserProject;
+import com.backand.tracker.modules.task.Task;
+import com.backand.tracker.modules.task_role_permission.TaskPermissionsEnum;
+import com.backand.tracker.modules.task_role_permission.TaskRolePermissions;
+import com.backand.tracker.modules.user_task.UserTask;
+import com.backand.tracker.modules.user.User;
 import org.springframework.security.access.AccessDeniedException;
 
 import java.util.Collection;
