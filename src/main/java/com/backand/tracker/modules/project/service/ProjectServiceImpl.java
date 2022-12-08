@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 
 @Service
-public class ProjectServiceImpl implements ProjectService {
+public class ProjectServiceImpl implements
+        ProjectService {
     private final ProjectRepository projectRepository;
     private final UserProjectService userProjectService;
     private final UserService userService;
@@ -32,25 +33,53 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createNewProject(User user, String name, String descriptions) {
-        Project project = projectRepository.save(new Project(name, descriptions, user));
-        return project;
-    }
-
-    @Override
-    public Project getById(User user, Long id) {
-        Project project = projectRepository.getProjectById(id).orElseThrow(() -> new EntityNotFoundException("Project not found!"));
-
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.READ);
+    public Project createNewProject(
+            User user,
+            String name,
+            String descriptions
+    ) {
+        Project project = projectRepository
+                .save(new Project(name, descriptions, user));
 
         return project;
     }
 
     @Override
-    public void deleteProject(User user, Long projectId, Long projectOwnerUserId) {
-        Project project = getById(user, projectId);
+    public Project getById(
+            User user,
+            Long id
+    ) {
+        Project project = projectRepository
+                .getProjectById(id).orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Project not found!"));
 
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.DELETE);
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        user,
+                        project,
+                        ProjectPermissionsEnum.READ
+                );
+
+        return project;
+    }
+
+    @Override
+    public void deleteProject(
+            User user,
+            Long projectId,
+            Long projectOwnerUserId
+    ) {
+        Project project = getById(user,
+                projectId
+        );
+
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        user,
+                        project,
+                        ProjectPermissionsEnum.DELETE
+                );
 
         projectRepository.delete(project);
     }
@@ -62,12 +91,22 @@ public class ProjectServiceImpl implements ProjectService {
             Long projectOwnerId,
             Long employeeUserId
     ) {
-        User employee = userService.getUser(employeeUserId);
-        Project project = getById(user, projectId);
+        User employee = userService.getUser(
+                employeeUserId);
 
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.ADD_USER);
+        Project project = getById(user,
+                projectId
+        );
 
-        UserProject userProject =  userProjectService.createNewUserProject(employee, project);
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        user,
+                        project,
+                        ProjectPermissionsEnum.ADD_USER
+                );
+
+        UserProject userProject = userProjectService
+                .createNewUserProject(employee, project);
     }
 
     @Override
@@ -77,11 +116,20 @@ public class ProjectServiceImpl implements ProjectService {
             Long projectOwnerId,
             Long employeeUserId
     ) {
-        User employee = userService.getUser(employeeUserId);
-        Project project = getById(user, projectId);
+        User employee = userService.getUser(
+                employeeUserId);
+        Project project = getById(user,
+                projectId
+        );
 
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.DELETE_USER);
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        user,
+                        project,
+                        ProjectPermissionsEnum.DELETE_USER
+                );
 
-        userProjectService.deleteUserProject(employee, project);
+        userProjectService
+                .deleteUserProject(employee, project);
     }
 }

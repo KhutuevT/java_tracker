@@ -2,9 +2,8 @@ package com.backand.tracker.modules.user_project;
 
 import com.backand.tracker.modules.project.Project;
 import com.backand.tracker.modules.project_role.ProjectRole;
-import com.backand.tracker.utils.BaseEntity;
+import com.backand.tracker.utils.AbstractBaseEntity;
 import com.backand.tracker.modules.user.User;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +17,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "user_projects")
 @Entity
-public class UserProject extends BaseEntity {
+public class UserProject extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -32,7 +31,7 @@ public class UserProject extends BaseEntity {
     private ProjectRole role;
 
     @Deprecated
-    public UserProject(){
+    public UserProject() {
     }
 
     public UserProject(

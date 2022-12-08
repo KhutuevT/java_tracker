@@ -29,46 +29,77 @@ public class TimeSliceRestControllerV1 {
 
     @GetMapping
     public ResponseEntity getAll(
-            @PathVariable Long projectId,
-            @PathVariable Long taskId,
+            @PathVariable
+            Long projectId,
+            @PathVariable
+            Long taskId,
             Principal principal
     ) {
-        User user = userRepository.findByUsername(principal.getName()).get();
+        User user = userRepository.findByUsername(
+                principal.getName()).get();
         return null;
     }
 
     @GetMapping("/{timeSliceId}")
     public ResponseEntity getById(
-            @PathVariable Long projectId,
-            @PathVariable Long taskId,
-            @PathVariable Long timeSliceId,
+            @PathVariable
+            Long projectId,
+            @PathVariable
+            Long taskId,
+            @PathVariable
+            Long timeSliceId,
             Principal principal
     ) {
-        User user = userRepository.findByUsername(principal.getName()).get();
-        TimeSlice timeSlice = timeSliceService.getById(timeSliceId);
-        return new ResponseEntity(timeSlice, HttpStatus.OK);
+        User user = userRepository.findByUsername(
+                principal.getName()).get();
+        TimeSlice timeSlice = timeSliceService.getById(
+                timeSliceId);
+        return new ResponseEntity(timeSlice,
+                                  HttpStatus.OK
+        );
     }
 
     @PostMapping("/start")
     ResponseEntity start(
-            @PathVariable Long projectId,
-            @PathVariable Long taskId,
-            @RequestBody TimeSliceStartReqDto reqDto,
+            @PathVariable
+            Long projectId,
+            @PathVariable
+            Long taskId,
+            @RequestBody
+            TimeSliceStartReqDto reqDto,
             Principal principal
-    ){
-        User user = userRepository.findByUsername(principal.getName()).get();
-        TimeSlice timeSlice = timeSliceService.start(user, projectId, taskId, reqDto.getName());
-        return new ResponseEntity(timeSlice, HttpStatus.OK);
+    ) {
+        User user = userRepository.findByUsername(
+                principal.getName()).get();
+        TimeSlice timeSlice = timeSliceService
+                .start(user,
+                       projectId,
+                       taskId,
+                       reqDto.getName()
+                );
+
+        return new ResponseEntity(timeSlice,
+                                  HttpStatus.OK
+        );
     }
 
     @PostMapping("/stop")
     ResponseEntity stop(
-            @PathVariable Long projectId,
-            @PathVariable Long taskId,
+            @PathVariable
+            Long projectId,
+            @PathVariable
+            Long taskId,
             Principal principal
-    ){
-        User user = userRepository.findByUsername(principal.getName()).get();
-        TimeSlice timeSlice = timeSliceService.stop(user, projectId, taskId);
-        return new ResponseEntity(timeSlice, HttpStatus.OK);
+    ) {
+        User user = userRepository.findByUsername(
+                principal.getName()).get();
+        TimeSlice timeSlice = timeSliceService.stop(
+                user,
+                projectId,
+                taskId
+        );
+        return new ResponseEntity(timeSlice,
+                                  HttpStatus.OK
+        );
     }
 }

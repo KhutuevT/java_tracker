@@ -3,11 +3,10 @@ package com.backand.tracker.modules.task;
 import com.backand.tracker.modules.task_role.TaskRole;
 import com.backand.tracker.modules.time_slice.TimeSlice;
 import com.backand.tracker.modules.user_task.UserTask;
-import com.backand.tracker.utils.BaseEntity;
+import com.backand.tracker.utils.AbstractBaseEntity;
 import com.backand.tracker.modules.project.Project;
 import com.backand.tracker.modules.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +19,7 @@ import java.util.List;
 @Table(name = "tasks")
 @Setter
 @Getter
-public class Task extends BaseEntity {
+public class Task extends AbstractBaseEntity {
     @Column(name = "name")
     private String name;
 
@@ -51,7 +50,7 @@ public class Task extends BaseEntity {
     private Collection<TaskRole> taskRoles;
 
     @Deprecated
-    public Task(){
+    public Task() {
     }
 
     public Task(

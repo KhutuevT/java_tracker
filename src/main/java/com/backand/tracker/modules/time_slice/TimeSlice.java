@@ -1,10 +1,9 @@
 package com.backand.tracker.modules.time_slice;
 
 import com.backand.tracker.modules.task.Task;
-import com.backand.tracker.utils.BaseEntity;
+import com.backand.tracker.utils.AbstractBaseEntity;
 import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.time_slice.primitives.TimePoint;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +17,7 @@ import javax.persistence.*;
 @Table(name = "time_slice")
 @Setter
 @Getter
-public class TimeSlice extends BaseEntity {
+public class TimeSlice extends AbstractBaseEntity {
     @Column(name = "name")
     private String name;
 
@@ -41,7 +40,7 @@ public class TimeSlice extends BaseEntity {
     private User user;
 
     @Deprecated
-    public TimeSlice(){
+    public TimeSlice() {
     }
 
     public TimeSlice(

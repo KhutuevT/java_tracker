@@ -16,7 +16,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class TaskServiceImpl implements TaskService {
+public class TaskServiceImpl implements
+        TaskService {
 
     private final TaskRepository taskRepository;
     private final ProjectService projectService;
@@ -37,49 +38,96 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTaskByProjectId(User user, Long projectId) {
-        Project project = projectService.getById(user, projectId);
+    public List<Task> getAllTaskByProjectId(
+            User user,
+            Long projectId
+    ) {
+        Project project = projectService.getById(
+                user,
+                projectId
+        );
 
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
-                        user, project, ProjectPermissionsEnum.READ
+                        user,
+                        project,
+                        ProjectPermissionsEnum.READ
                 );
 
-        return (List<Task>) taskRepository.getTaskByProjectId(projectId);
+        return (List<Task>) taskRepository.getTaskByProjectId(
+                projectId);
     }
 
     @Override
-    public Task getTaskById(User user, Long projectId, Long taskId) {
-        Project project = projectService.getById(user, projectId);
+    public Task getTaskById(
+            User user,
+            Long projectId,
+            Long taskId
+    ) {
+        Project project = projectService.getById(
+                user,
+                projectId
+        );
 
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
-                        user, project, ProjectPermissionsEnum.READ
+                        user,
+                        project,
+                        ProjectPermissionsEnum.READ
                 );
-        return taskRepository.getTaskByIdAndProjectId(taskId, projectId)
-                .orElseThrow(() -> new EntityNotFoundException("Task not found!"));
+
+        return taskRepository
+                .getTaskByIdAndProjectId(taskId,
+                        projectId
+                )
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Task not found!"));
     }
 
     @Override
-    public Task createNewTask(User user, String name, String description, Long projectId) {
-        Project project = projectService.getById(user, projectId);
+    public Task createNewTask(
+            User user,
+            String name,
+            String description,
+            Long projectId
+    ) {
+        Project project = projectService.getById(
+                user,
+                projectId
+        );
 
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
-                        user, project, ProjectPermissionsEnum.CREATE_TASK
+                        user,
+                        project,
+                        ProjectPermissionsEnum.CREATE_TASK
                 );
 
-        Task task = new Task(name, description, project, user);
+        Task task = new Task(name,
+                description,
+                project,
+                user
+        );
         return taskRepository.save(task);
     }
 
     @Override
-    public void deleteTask(User user, Long taskOwnerUserId, Long taskId, Long projectId) {
-        Project project = projectService.getById(user, projectId);
+    public void deleteTask(
+            User user,
+            Long taskOwnerUserId,
+            Long taskId,
+            Long projectId
+    ) {
+        Project project = projectService.getById(
+                user,
+                projectId
+        );
 
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
-                        user, project, ProjectPermissionsEnum.DELETE_TASK
+                        user,
+                        project,
+                        ProjectPermissionsEnum.DELETE_TASK
                 );
 
         taskRepository.deleteById(taskId);
@@ -92,12 +140,20 @@ public class TaskServiceImpl implements TaskService {
             Long projectId,
             Long taskExecutorUserId
     ) {
-        Project project = projectService.getById(user, projectId);
-        Task task = taskService.getTaskById(user, taskId, projectId);
+        Project project = projectService.getById(
+                user,
+                projectId
+        );
+        Task task = taskService.getTaskById(user,
+                taskId,
+                projectId
+        );
 
         UserPermissionsCheck
                 .checkUserPermissionInTaskWithException(
-                        user, task, TaskPermissionsEnum.ADD_USER
+                        user,
+                        task,
+                        TaskPermissionsEnum.ADD_USER
                 );
 
         //UserProject userProject = new UserProject(user, project, baseUserProjectRole);
@@ -110,12 +166,20 @@ public class TaskServiceImpl implements TaskService {
             Long projectId,
             Long taskExecutorUserId
     ) {
-        Project project = projectService.getById(user, projectId);
-        Task task = taskService.getTaskById(user, taskId, projectId);
+        Project project = projectService.getById(
+                user,
+                projectId
+        );
+        Task task = taskService.getTaskById(user,
+                taskId,
+                projectId
+        );
 
         UserPermissionsCheck
                 .checkUserPermissionInTaskWithException(
-                        user, task, TaskPermissionsEnum.DELETE_USER
+                        user,
+                        task,
+                        TaskPermissionsEnum.DELETE_USER
                 );
 
         // UserProject userProject = userProjectService

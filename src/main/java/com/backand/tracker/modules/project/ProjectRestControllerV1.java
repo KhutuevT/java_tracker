@@ -28,26 +28,45 @@ public class ProjectRestControllerV1 {
     }
 
     @GetMapping("/{projectId}")
-    public ResponseEntity getById(@PathVariable Long projectId, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName()).get();
-        Project project = projectService.getById(user, projectId);
-        return new ResponseEntity(project, HttpStatus.OK);
+    public ResponseEntity<Project> getById(
+            @PathVariable
+            Long projectId,
+            Principal principal
+    ) {
+        User user = userRepository
+                .findByUsername(principal.getName())
+                .get();
+
+        Project project = projectService
+                .getById(user, projectId);
+
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity createNewProject(@RequestBody CreateProjectReqDto reqDto, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName()).get();
-        Project project = projectService.createNewProject(user, reqDto.getName(), reqDto.getDescriptions());
-        return new ResponseEntity(project, HttpStatus.OK);
+    public ResponseEntity<Project> createNewProject(
+            @RequestBody
+            CreateProjectReqDto reqDto,
+            Principal principal
+    ) {
+        User user = userRepository
+                .findByUsername(principal.getName())
+                .get();
+
+        Project project = projectService
+                .createNewProject(
+                        user, reqDto.getName(), reqDto.getDescriptions());
+
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
-    @PostMapping("/employee")
-    public ResponseEntity addEmployeeInProject() {
-        return null;
-    }
-
-    @DeleteMapping("/employee")
-    public ResponseEntity deleteEmployeeInProject() {
-        return null;
-    }
+//    @PostMapping("/employee")
+//    public ResponseEntity addEmployeeInProject() {
+//        return null;
+//    }
+//
+//    @DeleteMapping("/employee")
+//    public ResponseEntity deleteEmployeeInProject() {
+//        return null;
+//    }
 }

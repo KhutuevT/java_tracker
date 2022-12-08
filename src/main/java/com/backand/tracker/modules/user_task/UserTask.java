@@ -2,9 +2,8 @@ package com.backand.tracker.modules.user_task;
 
 import com.backand.tracker.modules.task.Task;
 import com.backand.tracker.modules.task_role.TaskRole;
-import com.backand.tracker.utils.BaseEntity;
+import com.backand.tracker.utils.AbstractBaseEntity;
 import com.backand.tracker.modules.user.User;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +17,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "user_tasks")
 @Entity
-public class UserTask extends BaseEntity {
+public class UserTask extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -32,7 +31,7 @@ public class UserTask extends BaseEntity {
     private TaskRole role;
 
     @Deprecated
-    public UserTask(){
+    public UserTask() {
     }
 
     public UserTask(

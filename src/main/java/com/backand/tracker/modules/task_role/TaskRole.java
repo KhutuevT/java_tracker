@@ -3,10 +3,9 @@ package com.backand.tracker.modules.task_role;
 import com.backand.tracker.modules.task.Task;
 import com.backand.tracker.modules.task_role_permission.TaskRolePermissions;
 import com.backand.tracker.modules.user_task.UserTask;
-import com.backand.tracker.utils.BaseEntity;
+import com.backand.tracker.utils.AbstractBaseEntity;
 import com.backand.tracker.modules.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +19,7 @@ import java.util.Collection;
 @Getter
 @Table(name = "task_roles")
 @Entity
-public class TaskRole extends BaseEntity {
+public class TaskRole extends AbstractBaseEntity {
     @Column(name = "name")
     private String name;
 
@@ -40,18 +39,18 @@ public class TaskRole extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<UserTask> userTasks;
 
-   @Deprecated
-   public TaskRole() {
-   }
+    @Deprecated
+    public TaskRole() {
+    }
 
-   public TaskRole(
-           String name,
-           User creator,
-           Task task
-   ) {
-       this.name = name;
-       this.creator = creator;
-       this.task = task;
-   }
+    public TaskRole(
+            String name,
+            User creator,
+            Task task
+    ) {
+        this.name = name;
+        this.creator = creator;
+        this.task = task;
+    }
 
 }

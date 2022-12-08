@@ -1,6 +1,6 @@
 package com.backand.tracker.modules.user;
 
-import com.backand.tracker.utils.BaseEntity;
+import com.backand.tracker.utils.AbstractBaseEntity;
 import com.backand.tracker.modules.project_role.ProjectRole;
 import com.backand.tracker.modules.user.primitives.EmailAddress;
 import com.backand.tracker.modules.user.primitives.Password;
@@ -9,7 +9,6 @@ import com.backand.tracker.modules.task_role.TaskRole;
 import com.backand.tracker.modules.time_slice.TimeSlice;
 import com.backand.tracker.modules.user_task.UserTask;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,7 +20,7 @@ import java.util.Collection;
 @Table(name = "users")
 @Setter
 @Getter
-public class User extends BaseEntity {
+public class User extends AbstractBaseEntity {
     @Column(name = "username")
     String username;
 
@@ -59,7 +58,8 @@ public class User extends BaseEntity {
     private Collection<TimeSlice> timeSlices;
 
     @Deprecated
-    public User() {}
+    public User() {
+    }
 
     public User(String name, EmailAddress emailAddress, Password password) {
         this.username = name;

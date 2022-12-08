@@ -3,10 +3,9 @@ package com.backand.tracker.modules.project_role;
 import com.backand.tracker.modules.project.Project;
 import com.backand.tracker.modules.project_role_permission.ProjectRolePermissions;
 import com.backand.tracker.modules.user_project.UserProject;
-import com.backand.tracker.utils.BaseEntity;
+import com.backand.tracker.utils.AbstractBaseEntity;
 import com.backand.tracker.modules.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +19,7 @@ import java.util.Collection;
 @Setter
 @Getter
 @Table(name = "project_roles")
-public class ProjectRole extends BaseEntity {
+public class ProjectRole extends AbstractBaseEntity {
     @Column(name = "name")
     private String name;
 
@@ -41,7 +40,7 @@ public class ProjectRole extends BaseEntity {
     private Collection<UserProject> userProjects;
 
     @Deprecated
-    public ProjectRole(){
+    public ProjectRole() {
     }
 
     public ProjectRole(

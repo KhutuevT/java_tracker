@@ -16,7 +16,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class TimeSliceServiceImpl implements TimeSliceService {
+public class TimeSliceServiceImpl implements
+        TimeSliceService {
 
     private TimeSliceRepository timeSliceRepository;
     private TaskService taskService;
@@ -32,7 +33,10 @@ public class TimeSliceServiceImpl implements TimeSliceService {
 
     @Override
     public TimeSlice getById(Long id) {
-        return timeSliceRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Time slice not found!"));
+        return timeSliceRepository
+                .findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Time slice not found!"));
     }
 
     @Override
@@ -41,52 +45,87 @@ public class TimeSliceServiceImpl implements TimeSliceService {
     }
 
     @Override
-    public List<TimeSlice> getTaskTimeSlices(Long taskId, TimePoint startDate, TimePoint endDate) {
+    public List<TimeSlice> getTaskTimeSlices(
+            Long taskId,
+            TimePoint startDate,
+            TimePoint endDate
+    ) {
         return null;
     }
 
     @Override
-    public List<TimeSlice> getTaskTimeSlicesByUser(Long taskId, Long userId) {
+    public List<TimeSlice> getTaskTimeSlicesByUser(
+            Long taskId,
+            Long userId
+    ) {
         return null;
     }
 
     @Override
-    public List<TimeSlice> getTaskTimeSlicesByUser(Long taskId, Long userId, TimePoint startDate, TimePoint endDate) {
+    public List<TimeSlice> getTaskTimeSlicesByUser(
+            Long taskId,
+            Long userId,
+            TimePoint startDate,
+            TimePoint endDate
+    ) {
         return null;
     }
 
     @Override
-    public TimeSlice start(User user, Long projectId, Long taskId, String name) {
-        Task task = taskService.getTaskById(user, projectId, taskId);
-        TimeSlice lastTimeSlice = getLastTimeSliceByTask(task);
+    public TimeSlice start(User user,
+                           Long projectId,
+                           Long taskId,
+                           String name
+    ) {
+        Task task = taskService.getTaskById(user,
+                                            projectId,
+                                            taskId
+        );
+        TimeSlice lastTimeSlice = getLastTimeSliceByTask(
+                task);
 
-        if(lastTimeSlice != null && lastTimeSlice.getEndTimePoint() == null) {
-            throw new TimeSliceAlreadyStartException("Time slice in this task already start!");
+        if (lastTimeSlice != null && lastTimeSlice.getEndTimePoint() == null) {
+            throw new TimeSliceAlreadyStartException(
+                    "Time slice in this task already start!");
         }
 
         TimePoint timePoint = new TimePoint(new Date());
-        TimeSlice timeSlice = new TimeSlice(name, timePoint, task, user);
+        TimeSlice timeSlice = new TimeSlice(name,
+                                            timePoint,
+                                            task,
+                                            user
+        );
         return timeSliceRepository.save(timeSlice);
     }
 
     @Override
-    public TimeSlice stop(User user, Long projectId, Long taskId) {
-        Task task = taskService.getTaskById(user, projectId, taskId);
-        TimeSlice lastTimeSlice = getLastTimeSliceByTask(task);
+    public TimeSlice stop(User user,
+                          Long projectId,
+                          Long taskId
+    ) {
+        Task task = taskService.getTaskById(user,
+                                            projectId,
+                                            taskId
+        );
+        TimeSlice lastTimeSlice = getLastTimeSliceByTask(
+                task);
 
-        if(lastTimeSlice != null && lastTimeSlice.getEndTimePoint() != null) {
-            throw new TimeSliceAlreadyStopException("Time slice in this task already stop!");
+        if (lastTimeSlice != null && lastTimeSlice.getEndTimePoint() != null) {
+            throw new TimeSliceAlreadyStopException(
+                    "Time slice in this task already stop!");
         }
 
         TimePoint timePoint = new TimePoint(new Date());
         lastTimeSlice.setEndTimePoint(timePoint);
 
-        return timeSliceRepository.save(lastTimeSlice);
+        return timeSliceRepository.save(
+                lastTimeSlice);
     }
 
     private TimeSlice getLastTimeSliceByTask(Task task) {
         TimeSlice lastTimeSlice = timeSliceRepository
-                .findFirstByTaskOrderByStartTimePointDesc(task)
+                .findFirstByTaskOrderByStartTimePointDesc(
+                        task)
                 .orElse(null);
 
         return lastTimeSlice;
