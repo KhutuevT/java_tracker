@@ -17,5 +17,5 @@ public class TaskRolePermissions extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "permission")
-    private ProjectPermissionsEnum projectPermission;
+    private TaskPermissionsEnum taskPermissions;
 }

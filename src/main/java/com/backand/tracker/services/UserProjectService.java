@@ -8,4 +8,5 @@ import com.backand.tracker.domains.user.User;
 public interface UserProjectService {
     UserProject createNewUserProject(User user, Project project);
 
+    UserProject deleteUserProject(User user, Project project);
 }

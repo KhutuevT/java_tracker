@@ -43,10 +43,11 @@ public class TaskRole extends BaseEntity {
    public TaskRole(
            String name,
            User creator,
-           Collection<TaskPermissionsEnum> permissions
+           Task task
    ) {
        this.name = name;
        this.creator = creator;
+       this.task = task;
    }
 
 }

@@ -20,21 +20,27 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User getUser(Long id) {
-        return null;
+        return userRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found!"));
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     @Override
     public User createNewUser(User user) {
-        return userRepository.save(user);
+        return userRepository
+                .save(user);
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
+        return userRepository
+                .existsByUsername(username);
     }
 }

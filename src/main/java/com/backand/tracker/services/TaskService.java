@@ -12,11 +12,9 @@ public interface TaskService {
 
     Task createNewTask(User user, String name, String description, Long projectId);
 
-    void deleteTask(User user, Long taskOwnerUserId, Long taskId);
+    void deleteTask(User user, Long taskOwnerUserId, Long taskId, Long projectId);
 
-    void addTaskExecutor(User user, Long taskId, Long taskExecutorUserId, Long taskOwnerUserId);
+    void addTaskExecutor(User user, Long taskId, Long projectId, Long taskExecutorUserId);
 
-    void deleteTaskExecutor(User user, Long taskId, Long taskExecutorUserId, Long taskOwnerUserId);
-
-    void deleteTaskExecutor(User user, Long taskId, Long taskExecutorUserId);
+    void deleteTaskExecutor(User user, Long taskId, Long projectId, Long taskExecutorUserId);
 }

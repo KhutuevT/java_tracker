@@ -1,7 +1,6 @@
 package com.backand.tracker.services.impl;
 
 import com.backand.tracker.domains.project.Project;
-import com.backand.tracker.domains.project.ProjectRole;
 import com.backand.tracker.domains.project.UserProject;
 import com.backand.tracker.domains.user.User;
 import com.backand.tracker.repositories.UserProjectRepository;
@@ -21,6 +20,11 @@ public class UserProjectServiceImpl implements UserProjectService {
 
     @Override
     public UserProject createNewUserProject(User user, Project project) {
+        return null;
+    }
+
+    @Override
+    public UserProject deleteUserProject(User user, Project project) {
         return null;
     }
 }

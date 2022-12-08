@@ -1,14 +1,17 @@
 package com.backand.tracker.services.impl;
 
 import com.backand.tracker.domains.project.Project;
+import com.backand.tracker.domains.project.ProjectPermissionsEnum;
 import com.backand.tracker.domains.project.ProjectRole;
 import com.backand.tracker.domains.user.User;
 import com.backand.tracker.repositories.ProjectRoleRepository;
 import com.backand.tracker.services.ProjectRoleService;
 import com.backand.tracker.services.ProjectService;
+import com.backand.tracker.utils.UserPermissionsCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 
 @Service
@@ -29,19 +32,29 @@ public class ProjectRoleServiceImpl implements ProjectRoleService {
     @Override
     public ProjectRole createNew(String name, User creator, Long projectId) {
         Project project = projectService.getById(creator, projectId);
+        UserPermissionsCheck.checkUserPermissionInProjectWithException(creator, project, ProjectPermissionsEnum.CREATE_ROLE);
         ProjectRole projectRole = new ProjectRole(name, creator, project);
         return projectRoleRepository.save(projectRole);
     }
 
     @Override
+    public void delete(User user, Long id, Long projectId) {
+        Project project = projectService.getById(user, projectId);
+        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.DELETE_ROLE);
+        projectRoleRepository.deleteById(id);
+    }
+
+    @Override
     public Collection<ProjectRole> getAllByProject(User user, Long projectId) {
-        //TODO проверить доступ
-        //return projectRoleRepository.getByProjectId(projectId);
+        Project project = projectService.getById(user, projectId);
+        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.READ);
         return projectRoleRepository.findProjectRolesByProjectId(projectId);
     }
 
     @Override
-    public ProjectRole getById(User user, Long id) {
-        return null;
+    public ProjectRole getById(User user, Long id, Long projectId) {
+        Project project = projectService.getById(user, projectId);
+        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.READ);
+        return projectRoleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role not found!"));
     }
 }

@@ -45,13 +45,13 @@ public class ProjectRestControllerV1 {
         return new ResponseEntity(project, HttpStatus.OK);
     }
 
-//    @PostMapping("/employee")
-//    public ResponseEntity addEmployeeInProject() {
-//        return null;
-//    }
-//
-//    @DeleteMapping("/employee")
-//    public ResponseEntity deleteEmployeeInProject() {
-//        return null;
-//    }
+    @PostMapping("/employee")
+    public ResponseEntity addEmployeeInProject() {
+        return null;
+    }
+
+    @DeleteMapping("/employee")
+    public ResponseEntity deleteEmployeeInProject() {
+        return null;
+    }
 }
