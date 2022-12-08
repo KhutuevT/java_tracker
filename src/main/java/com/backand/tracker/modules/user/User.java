@@ -10,6 +10,8 @@ import com.backand.tracker.modules.time_slice.TimeSlice;
 import com.backand.tracker.modules.user_task.UserTask;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -17,7 +19,8 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-@Data
+@Setter
+@Getter
 public class User extends BaseEntity {
     @Column(name = "username")
     String username;

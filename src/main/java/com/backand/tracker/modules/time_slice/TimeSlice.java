@@ -5,6 +5,8 @@ import com.backand.tracker.utils.BaseEntity;
 import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.time_slice.primitives.TimePoint;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -14,7 +16,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "time_slice")
-@Data
+@Setter
+@Getter
 public class TimeSlice extends BaseEntity {
     @Column(name = "name")
     private String name;

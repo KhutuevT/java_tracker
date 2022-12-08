@@ -5,6 +5,8 @@ import com.backand.tracker.modules.project_role.ProjectRole;
 import com.backand.tracker.utils.BaseEntity;
 import com.backand.tracker.modules.user.User;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -12,7 +14,8 @@ import javax.persistence.*;
  * Описывает проекты юзера
  * (созданные им или если его добавили в проект)
  */
-@Data
+@Setter
+@Getter
 @Table(name = "user_projects")
 @Entity
 public class UserProject extends BaseEntity {

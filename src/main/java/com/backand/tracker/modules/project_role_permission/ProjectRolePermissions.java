@@ -3,10 +3,13 @@ package com.backand.tracker.modules.project_role_permission;
 import com.backand.tracker.modules.project_role.ProjectRole;
 import com.backand.tracker.utils.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "project_role_permissions")
 public class ProjectRolePermissions extends BaseEntity {

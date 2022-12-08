@@ -8,6 +8,8 @@ import com.backand.tracker.modules.project.Project;
 import com.backand.tracker.modules.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -16,7 +18,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "tasks")
-@Data
+@Setter
+@Getter
 public class Task extends BaseEntity {
     @Column(name = "name")
     private String name;

@@ -7,6 +7,8 @@ import com.backand.tracker.utils.BaseEntity;
 import com.backand.tracker.modules.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -14,7 +16,8 @@ import java.util.Collection;
 /**
  * Описывает роли которые могут быть у пользователей в таске
  */
-@Data
+@Setter
+@Getter
 @Table(name = "task_roles")
 @Entity
 public class TaskRole extends BaseEntity {

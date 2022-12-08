@@ -3,11 +3,14 @@ package com.backand.tracker.modules.task_role_permission;
 import com.backand.tracker.modules.task_role.TaskRole;
 import com.backand.tracker.utils.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name = "task_role_permissions")
 public class TaskRolePermissions extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
