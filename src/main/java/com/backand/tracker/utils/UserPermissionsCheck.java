@@ -28,13 +28,13 @@ public class UserPermissionsCheck {
 
         Collection<UserProject> userProjects = project.getUserProjects();
 
-        for(UserProject userProject: userProjects) {
-            if(Objects.equals(userProject.getUser().getId(), user.getId())) {
+        for (UserProject userProject : userProjects) {
+            if (Objects.equals(userProject.getUser().getId(), user.getId())) {
                 Collection<ProjectRolePermissions> projectRolePermissions =
                         userProject.getRole().getProjectRolePermissions();
 
-                for(ProjectRolePermissions projectRolePermission: projectRolePermissions) {
-                    if(projectRolePermission.getProjectPermission() == projectPermission) {
+                for (ProjectRolePermissions projectRolePermission : projectRolePermissions) {
+                    if (projectRolePermission.getProjectPermission() == projectPermission) {
                         return true;
                     }
                 }
@@ -57,12 +57,12 @@ public class UserPermissionsCheck {
 
         Collection<UserTask> userTasks = task.getUserTasks();
 
-        for(UserTask userTask: userTasks) {
-            if(Objects.equals(userTask.getUser().getId(), user.getId())) {
+        for (UserTask userTask : userTasks) {
+            if (Objects.equals(userTask.getUser().getId(), user.getId())) {
                 Collection<TaskRolePermissions> taskRolePermissions = userTask.getRole().getTaskRolePermissions();
 
-                for(TaskRolePermissions taskRolePermission: taskRolePermissions) {
-                    if(taskRolePermission.getTaskPermissions() == taskPermission) {
+                for (TaskRolePermissions taskRolePermission : taskRolePermissions) {
+                    if (taskRolePermission.getTaskPermissions() == taskPermission) {
                         return true;
                     }
                 }
@@ -77,8 +77,8 @@ public class UserPermissionsCheck {
             User user,
             Project project,
             ProjectPermissionsEnum projectPermission
-    ){
-        if(!checkUserPermissionsInProject(user, project, projectPermission)){
+    ) {
+        if (!checkUserPermissionsInProject(user, project, projectPermission)) {
             throw new AccessDeniedException("Access denied!");
         }
     }
@@ -88,7 +88,7 @@ public class UserPermissionsCheck {
             Task task,
             TaskPermissionsEnum taskPermission
     ) {
-        if(!checkUserPermissionInTask(user, task, taskPermission)) {
+        if (!checkUserPermissionInTask(user, task, taskPermission)) {
             throw new AccessDeniedException("Access denied!");
         }
     }

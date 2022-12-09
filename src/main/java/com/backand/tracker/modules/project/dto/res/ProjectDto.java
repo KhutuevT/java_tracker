@@ -2,7 +2,6 @@ package com.backand.tracker.modules.project.dto.res;
 
 import com.backand.tracker.modules.project_role.dto.res.ProjectRoleDto;
 import com.backand.tracker.modules.task.dto.res.TaskDto;
-import com.backand.tracker.modules.user.dto.res.UserDto;
 import com.backand.tracker.modules.user_project.dto.res.UserProjectDto;
 import com.backand.tracker.utils.AbstractDto;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.Collection;
 public class ProjectDto extends AbstractDto {
     private String name;
     private String descriptions;
-    private UserDto creator;
+    private Long creatorId;
     private Collection<TaskDto> tasks;
     private Collection<UserProjectDto> userProjects;
     private Collection<ProjectRoleDto> projectRoles;

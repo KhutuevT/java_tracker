@@ -3,9 +3,9 @@ package com.backand.tracker.config;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.context.annotation.Bean;
 
+@org.springframework.context.annotation.Configuration
 public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {

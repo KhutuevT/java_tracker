@@ -1,6 +1,5 @@
 package com.backand.tracker.modules.time_slice.dto.res;
 
-import com.backand.tracker.modules.task.dto.res.TaskDto;
 import com.backand.tracker.modules.time_slice.primitives.TimePoint;
 import com.backand.tracker.modules.user.dto.res.UserDto;
 import com.backand.tracker.utils.AbstractDto;
@@ -17,6 +16,6 @@ public class TimeSliceDto extends AbstractDto {
     private String name;
     private TimePoint startTimePoint;
     private TimePoint endTimePoint;
-    private TaskDto task;
-    private UserDto user;
+    private Long taskId;
+    private Long userId;
 }

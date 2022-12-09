@@ -1,6 +1,5 @@
 package com.backand.tracker.modules.task_role_permission.dto.res;
 
-import com.backand.tracker.modules.task_role.dto.res.TaskRoleDto;
 import com.backand.tracker.modules.task_role_permission.TaskPermissionsEnum;
 import com.backand.tracker.utils.AbstractDto;
 import lombok.AllArgsConstructor;
@@ -13,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskRolePermissionsDto extends AbstractDto {
-    private TaskRoleDto taskRole;
+    private Long taskRoleId;
     private TaskPermissionsEnum taskPermissions;
 }
