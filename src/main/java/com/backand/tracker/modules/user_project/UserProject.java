@@ -28,7 +28,7 @@ public class UserProject extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_role_id")
-    private ProjectRole role;
+    private ProjectRole projectRole;
 
     @Deprecated
     public UserProject() {
@@ -37,10 +37,10 @@ public class UserProject extends AbstractBaseEntity {
     public UserProject(
             User user,
             Project project,
-            ProjectRole role
+            ProjectRole projectRole
     ) {
         this.user = user;
         this.project = project;
-        this.role = role;
+        this.projectRole = projectRole;
     }
 }

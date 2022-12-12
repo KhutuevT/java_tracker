@@ -28,7 +28,7 @@ public class UserTask extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_role_id")
-    private TaskRole role;
+    private TaskRole taskRole;
 
     @Deprecated
     public UserTask() {
@@ -37,10 +37,10 @@ public class UserTask extends AbstractBaseEntity {
     public UserTask(
             User user,
             Task task,
-            TaskRole role
+            TaskRole taskRole
     ) {
         this.user = user;
         this.task = task;
-        this.role = role;
+        this.taskRole = taskRole;
     }
 }
