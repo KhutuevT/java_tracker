@@ -1,5 +1,6 @@
 package com.backand.tracker.modules.project;
 
+import com.backand.tracker.modules.project.dto.res.ProjectDto;
 import com.backand.tracker.modules.project.service.ProjectService;
 import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.project.dto.req.CreateProjectReqDto;
@@ -28,7 +29,7 @@ public class ProjectRestControllerV1 {
     }
 
     @GetMapping("/{projectId}")
-    public ResponseEntity<Project> getById(
+    public ResponseEntity<ProjectDto> getById(
             @PathVariable
             Long projectId,
             Principal principal
@@ -37,14 +38,14 @@ public class ProjectRestControllerV1 {
                 .findByUsername(principal.getName())
                 .get();
 
-        Project project = projectService
+        ProjectDto project = projectService
                 .getById(user, projectId);
 
-        return new ResponseEntity<Project>(project, HttpStatus.OK);
+        return new ResponseEntity<ProjectDto>(project, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<Project> createNewProject(
+    public ResponseEntity<ProjectDto> createNewProject(
             @RequestBody
             CreateProjectReqDto reqDto,
             Principal principal
@@ -53,11 +54,11 @@ public class ProjectRestControllerV1 {
                 .findByUsername(principal.getName())
                 .get();
 
-        Project project = projectService
+        ProjectDto project = projectService
                 .createNewProject(
                         user, reqDto.getName(), reqDto.getDescriptions());
 
-        return new ResponseEntity<Project>(project, HttpStatus.OK);
+        return new ResponseEntity<ProjectDto>(project, HttpStatus.OK);
     }
 
 //    @PostMapping("/employee")

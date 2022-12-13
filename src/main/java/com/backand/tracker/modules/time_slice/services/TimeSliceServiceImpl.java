@@ -77,10 +77,8 @@ public class TimeSliceServiceImpl implements
                            Long taskId,
                            String name
     ) {
-        Task task = taskService.getTaskById(user,
-                                            projectId,
-                                            taskId
-        );
+        Task task = taskService
+                .getTaskById(taskId);
         TimeSlice lastTimeSlice = getLastTimeSliceByTask(
                 task);
 
@@ -91,9 +89,9 @@ public class TimeSliceServiceImpl implements
 
         TimePoint timePoint = new TimePoint(new Date());
         TimeSlice timeSlice = new TimeSlice(name,
-                                            timePoint,
-                                            task,
-                                            user
+                timePoint,
+                task,
+                user
         );
         return timeSliceRepository.save(timeSlice);
     }
@@ -103,10 +101,7 @@ public class TimeSliceServiceImpl implements
                           Long projectId,
                           Long taskId
     ) {
-        Task task = taskService.getTaskById(user,
-                                            projectId,
-                                            taskId
-        );
+        Task task = taskService.getTaskById(taskId);
         TimeSlice lastTimeSlice = getLastTimeSliceByTask(
                 task);
 

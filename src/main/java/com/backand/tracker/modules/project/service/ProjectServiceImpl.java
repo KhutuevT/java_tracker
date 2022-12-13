@@ -1,7 +1,9 @@
 package com.backand.tracker.modules.project.service;
 
 import com.backand.tracker.modules.project.Project;
+import com.backand.tracker.modules.project.ProjectMapper;
 import com.backand.tracker.modules.project.ProjectRepository;
+import com.backand.tracker.modules.project.dto.res.ProjectDto;
 import com.backand.tracker.modules.user_project.services.UserProjectService;
 import com.backand.tracker.modules.project_role_permission.ProjectPermissionsEnum;
 import com.backand.tracker.modules.user_project.UserProject;
@@ -20,20 +22,24 @@ public class ProjectServiceImpl implements
     private final UserProjectService userProjectService;
     private final UserService userService;
 
+    private final ProjectMapper projectMapper;
+
 
     @Autowired
     public ProjectServiceImpl(
             ProjectRepository projectRepository,
             UserProjectService userProjectService,
-            UserService userService
+            UserService userService,
+            ProjectMapper projectMapper
     ) {
         this.projectRepository = projectRepository;
         this.userProjectService = userProjectService;
         this.userService = userService;
+        this.projectMapper = projectMapper;
     }
 
     @Override
-    public Project createNewProject(
+    public ProjectDto createNewProject(
             User user,
             String name,
             String descriptions
@@ -41,19 +47,15 @@ public class ProjectServiceImpl implements
         Project project = projectRepository
                 .save(new Project(name, descriptions, user));
 
-        return project;
+        return projectMapper.toDto(project);
     }
 
     @Override
-    public Project getById(
+    public ProjectDto getById(
             User user,
             Long id
     ) {
-        Project project = projectRepository
-                .getProjectById(id).orElseThrow(
-                        () -> new EntityNotFoundException(
-                                "Project not found!"));
-
+        Project project = getById(id);
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
                         user,
@@ -61,7 +63,7 @@ public class ProjectServiceImpl implements
                         ProjectPermissionsEnum.READ
                 );
 
-        return project;
+        return projectMapper.toDto(project);
     }
 
     @Override
@@ -70,10 +72,7 @@ public class ProjectServiceImpl implements
             Long projectId,
             Long projectOwnerUserId
     ) {
-        Project project = getById(user,
-                projectId
-        );
-
+        Project project = getById(projectId);
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
                         user,
@@ -94,10 +93,7 @@ public class ProjectServiceImpl implements
         User employee = userService.getUser(
                 employeeUserId);
 
-        Project project = getById(user,
-                projectId
-        );
-
+        Project project = getById(projectId);
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
                         user,
@@ -116,11 +112,9 @@ public class ProjectServiceImpl implements
             Long projectOwnerId,
             Long employeeUserId
     ) {
-        User employee = userService.getUser(
-                employeeUserId);
-        Project project = getById(user,
-                projectId
-        );
+        User employee = userService.getUser(employeeUserId);
+
+        Project project = getById(projectId);
 
         UserPermissionsCheck
                 .checkUserPermissionInProjectWithException(
@@ -131,5 +125,12 @@ public class ProjectServiceImpl implements
 
         userProjectService
                 .deleteUserProject(employee, project);
+    }
+
+    public Project getById(Long projectId) {
+        return projectRepository
+                .getProjectById(projectId).orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Project not found!"));
     }
 }

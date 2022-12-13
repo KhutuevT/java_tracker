@@ -40,7 +40,7 @@ public class TaskRoleServiceImpl implements TaskRoleService {
             Long projectId,
             Long taskId
     ) {
-        Task task = taskService.getTaskById(creator, projectId, taskId);
+        Task task = taskService.getTaskById(taskId);
 
         UserPermissionsCheck
                 .checkUserPermissionInTaskWithException(
@@ -59,7 +59,7 @@ public class TaskRoleServiceImpl implements TaskRoleService {
             Long projectId,
             Long taskRoleId
     ) {
-        Task task = taskService.getTaskById(user, projectId, taskId);
+        Task task = taskService.getTaskById(taskId);
 
         UserPermissionsCheck
                 .checkUserPermissionInTaskWithException(

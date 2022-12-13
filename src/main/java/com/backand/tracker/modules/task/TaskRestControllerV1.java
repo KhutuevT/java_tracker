@@ -1,6 +1,7 @@
 package com.backand.tracker.modules.task;
 
 import com.backand.tracker.modules.task.dto.req.AddTaskReqDto;
+import com.backand.tracker.modules.task.dto.res.TaskDto;
 import com.backand.tracker.modules.task.services.TaskService;
 import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.user.UserRepository;
@@ -34,15 +35,13 @@ public class TaskRestControllerV1 {
             Long projectId,
             Principal principal
     ) {
-        User user = userRepository.findByUsername(
-                principal.getName()).get();
-        List<Task> tasks = taskService.getAllTaskByProjectId(
-                user,
-                projectId
-        );
-        return new ResponseEntity(tasks,
-                                  HttpStatus.OK
-        );
+        User user = userRepository
+                .findByUsername(principal.getName()).get();
+
+        List<TaskDto> tasks = taskService
+                .getAllTaskByProjectId(user, projectId);
+
+        return new ResponseEntity(tasks, HttpStatus.OK);
     }
 
     @GetMapping("/{taskId}")
@@ -53,15 +52,13 @@ public class TaskRestControllerV1 {
             Long taskId,
             Principal principal
     ) {
-        User user = userRepository.findByUsername(
-                principal.getName()).get();
-        Task task = taskService.getTaskById(user,
-                                            projectId,
-                                            taskId
-        );
-        return new ResponseEntity(task,
-                                  HttpStatus.OK
-        );
+        User user = userRepository
+                .findByUsername(principal.getName()).get();
+
+        TaskDto task = taskService
+                .getTaskById(user, projectId, taskId);
+
+        return new ResponseEntity(task, HttpStatus.OK);
     }
 
     @PostMapping()
@@ -74,7 +71,7 @@ public class TaskRestControllerV1 {
     ) {
         User user = userRepository.findByUsername(
                 principal.getName()).get();
-        Task task = taskService
+        TaskDto task = taskService
                 .createNewTask(
                         user,
                         reqDto.getName(),
@@ -82,8 +79,6 @@ public class TaskRestControllerV1 {
                         projectId
                 );
 
-        return new ResponseEntity(task,
-                                  HttpStatus.OK
-        );
+        return new ResponseEntity(task, HttpStatus.OK);
     }
 }
