@@ -9,6 +9,7 @@ import com.backand.tracker.modules.project_role.services.ProjectRoleService;
 import com.backand.tracker.modules.project.service.ProjectService;
 import com.backand.tracker.utils.UserPermissionsCheck;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -79,5 +80,12 @@ public class ProjectRoleServiceImpl implements ProjectRoleService {
         return projectRoleRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found!"));
+    }
+
+    @Override
+    public ProjectRole getByName(User user, String name) {
+        return projectRoleRepository
+                .getProjectRoleByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Project role not found!"));
     }
 }

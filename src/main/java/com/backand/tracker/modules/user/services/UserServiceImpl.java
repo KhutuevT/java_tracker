@@ -1,12 +1,12 @@
 package com.backand.tracker.modules.user.services;
 
 import com.backand.tracker.modules.user.UserRepository;
-import com.backand.tracker.modules.user.services.UserService;
 import com.backand.tracker.modules.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
     ) {
         this.userRepository = userRepository;
     }
+
     @Override
     public User getUser(Long id) {
         return userRepository

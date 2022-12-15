@@ -4,6 +4,9 @@ import com.backand.tracker.modules.project.Project;
 import com.backand.tracker.modules.project.ProjectMapper;
 import com.backand.tracker.modules.project.ProjectRepository;
 import com.backand.tracker.modules.project.dto.res.ProjectDto;
+import com.backand.tracker.modules.project_role.ProjectRole;
+import com.backand.tracker.modules.project_role.services.ProjectRoleService;
+import com.backand.tracker.modules.project_role_permission.services.ProjectRolePermissionsService;
 import com.backand.tracker.modules.user_project.services.UserProjectService;
 import com.backand.tracker.modules.project_role_permission.ProjectPermissionsEnum;
 import com.backand.tracker.modules.user_project.UserProject;
@@ -21,20 +24,25 @@ public class ProjectServiceImpl implements
     private final ProjectRepository projectRepository;
     private final UserProjectService userProjectService;
     private final UserService userService;
+    private final ProjectRoleService projectRoleService;
+    private final ProjectRolePermissionsService projectRolePermissionsService;
 
     private final ProjectMapper projectMapper;
-
 
     @Autowired
     public ProjectServiceImpl(
             ProjectRepository projectRepository,
             UserProjectService userProjectService,
             UserService userService,
+            ProjectRoleService projectRoleService,
+            ProjectRolePermissionsService projectRolePermissionsService,
             ProjectMapper projectMapper
     ) {
         this.projectRepository = projectRepository;
         this.userProjectService = userProjectService;
         this.userService = userService;
+        this.projectRoleService = projectRoleService;
+        this.projectRolePermissionsService = projectRolePermissionsService;
         this.projectMapper = projectMapper;
     }
 
@@ -46,6 +54,12 @@ public class ProjectServiceImpl implements
     ) {
         Project project = projectRepository
                 .save(new Project(name, descriptions, user));
+
+        ProjectRole projectRole = projectRoleService
+                .createNew(String.valueOf(ProjectPermissionsEnum.READ), user, project.getId());
+
+        projectRolePermissionsService
+                .addNewPermissionInProjectRole(user, projectRole, ProjectPermissionsEnum.READ);
 
         return projectMapper.toDto(project);
     }
@@ -62,9 +76,6 @@ public class ProjectServiceImpl implements
                         project,
                         ProjectPermissionsEnum.READ
                 );
-
-        System.out.println(project.getProjectRoles());
-        System.out.println("-------------------");
         return projectMapper.toDto(project);
     }
 
@@ -102,8 +113,11 @@ public class ProjectServiceImpl implements
                         ProjectPermissionsEnum.ADD_USER
                 );
 
+        ProjectRole onlyReadRole = projectRoleService
+                .getByName(user, String.valueOf(ProjectPermissionsEnum.READ));
+
         UserProject userProject = userProjectService
-                .createNewUserProject(employee, project);
+                .createNewUserProject(employee, project, onlyReadRole);
     }
 
     @Override

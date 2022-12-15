@@ -37,10 +37,18 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(LOGIN_ENDPOINT, REGISTER_ENDPOINT, "/swagger-ui/**", "/swagger-resources/**",
-                        "/swagger-ui.html",
+                .antMatchers(LOGIN_ENDPOINT, REGISTER_ENDPOINT,
+                        "/",
+                        "/csrf",
                         "/v2/api-docs",
-                        "/webjars/**").permitAll()
+                        "/swagger-resources/configuration/ui",
+                        "/configuration/ui",
+                        "/swagger-resources",
+                        "/swagger-resources/configuration/security",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**",
+                        "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())

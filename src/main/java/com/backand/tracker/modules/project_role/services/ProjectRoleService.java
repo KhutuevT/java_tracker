@@ -13,4 +13,6 @@ public interface ProjectRoleService {
     Collection<ProjectRole> getAllByProject(User user, Long projectId);
 
     ProjectRole getById(User user, Long id, Long projectId);
+
+    ProjectRole getByName(User user, String name);
 }

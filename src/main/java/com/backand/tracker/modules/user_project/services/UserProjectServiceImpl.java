@@ -1,6 +1,7 @@
 package com.backand.tracker.modules.user_project.services;
 
 import com.backand.tracker.modules.project.Project;
+import com.backand.tracker.modules.project_role.ProjectRole;
 import com.backand.tracker.modules.user_project.UserProject;
 import com.backand.tracker.modules.user_project.services.UserProjectService;
 import com.backand.tracker.modules.user.User;
@@ -19,7 +20,7 @@ public class UserProjectServiceImpl implements UserProjectService {
     }
 
     @Override
-    public UserProject createNewUserProject(User user, Project project) {
+    public UserProject createNewUserProject(User user, Project project, ProjectRole projectRole) {
         return null;
     }
 
