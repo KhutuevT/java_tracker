@@ -4,7 +4,7 @@ import com.backand.tracker.modules.project.dto.res.ProjectDto;
 import com.backand.tracker.modules.project.service.ProjectService;
 import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.project.dto.req.CreateProjectReqDto;
-import com.backand.tracker.modules.user.UserRepository;
+import com.backand.tracker.modules.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +16,16 @@ import java.security.Principal;
 @RequestMapping(value = "/api/v1/projects")
 public class ProjectRestControllerV1 {
 
+    UserService userService;
     ProjectService projectService;
-    UserRepository userRepository;
 
     @Autowired
     ProjectRestControllerV1(
             ProjectService projectService,
-            UserRepository userRepository
+            UserService userService
     ) {
         this.projectService = projectService;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/{projectId}")
@@ -34,9 +34,7 @@ public class ProjectRestControllerV1 {
             Long projectId,
             Principal principal
     ) {
-        User user = userRepository
-                .findByUsername(principal.getName())
-                .get();
+        User user = userService.getUserByUsername(principal.getName());
 
         ProjectDto project = projectService
                 .getById(user, projectId);
@@ -50,24 +48,33 @@ public class ProjectRestControllerV1 {
             CreateProjectReqDto reqDto,
             Principal principal
     ) {
-        User user = userRepository
-                .findByUsername(principal.getName())
-                .get();
+        User user = userService.getUserByUsername(principal.getName());
 
         ProjectDto project = projectService
-                .createNewProject(
-                        user, reqDto.getName(), reqDto.getDescriptions());
+                .createNewProject(user, reqDto.getName(), reqDto.getDescriptions());
 
         return new ResponseEntity<ProjectDto>(project, HttpStatus.OK);
     }
 
-//    @PostMapping("/employee")
-//    public ResponseEntity addEmployeeInProject() {
-//        return null;
-//    }
-//
-//    @DeleteMapping("/employee")
-//    public ResponseEntity deleteEmployeeInProject() {
-//        return null;
-//    }
+    @PostMapping("/{projectId}/employee")
+    public ResponseEntity addEmployeeInProject(
+            @PathVariable Long projectId,
+            @RequestBody Long employeeUserId,
+            Principal principal
+    ) {
+        User user = userService.getUserByUsername(principal.getName());
+        projectService.addEmployeeInProject(user, projectId, employeeUserId);
+        return null;
+    }
+
+    @DeleteMapping("/{projectId}/employee")
+    public ResponseEntity deleteEmployeeInProject(
+            @PathVariable Long projectId,
+            @RequestBody Long employeeUserId,
+            Principal principal
+    ) {
+        User user = userService.getUserByUsername(principal.getName());
+        projectService.deleteEmployeeInProject(user, projectId, employeeUserId);
+        return null;
+    }
 }

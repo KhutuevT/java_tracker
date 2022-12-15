@@ -31,30 +31,53 @@ public class ProjectRoleServiceImpl implements ProjectRoleService {
 
     @Override
     public ProjectRole createNew(String name, User creator, Long projectId) {
-        Project project = projectService.getById(creator, projectId);
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(creator, project, ProjectPermissionsEnum.CREATE_ROLE);
+        Project project = projectService.getById(projectId);
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        creator,
+                        project,
+                        ProjectPermissionsEnum.CREATE_ROLE
+                );
+
         ProjectRole projectRole = new ProjectRole(name, creator, project);
         return projectRoleRepository.save(projectRole);
     }
 
     @Override
     public void delete(User user, Long id, Long projectId) {
-        Project project = projectService.getById(user, projectId);
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.DELETE_ROLE);
+        Project project = projectService.getById(projectId);
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        user,
+                        project,
+                        ProjectPermissionsEnum.DELETE_ROLE
+                );
         projectRoleRepository.deleteById(id);
     }
 
     @Override
     public Collection<ProjectRole> getAllByProject(User user, Long projectId) {
-        Project project = projectService.getById(user, projectId);
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.READ);
+        Project project = projectService.getById(projectId);
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        user,
+                        project,
+                        ProjectPermissionsEnum.READ
+                );
         return projectRoleRepository.findProjectRolesByProjectId(projectId);
     }
 
     @Override
     public ProjectRole getById(User user, Long id, Long projectId) {
-        Project project = projectService.getById(user, projectId);
-        UserPermissionsCheck.checkUserPermissionInProjectWithException(user, project, ProjectPermissionsEnum.READ);
-        return projectRoleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role not found!"));
+        Project project = projectService.getById(projectId);
+        UserPermissionsCheck
+                .checkUserPermissionInProjectWithException(
+                        user,
+                        project,
+                        ProjectPermissionsEnum.READ
+                );
+        return projectRoleRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Role not found!"));
     }
 }

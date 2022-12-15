@@ -31,17 +31,17 @@ public class Project extends AbstractBaseEntity {
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private Collection<Task> tasks;
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private Collection<UserProject> userProjects;
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private Collection<ProjectRole> projectRoles;
 
     @Deprecated

@@ -32,11 +32,11 @@ public class ProjectRole extends AbstractBaseEntity {
     private Project project;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "projectRole", fetch = FetchType.LAZY)
     private Collection<ProjectRolePermissions> projectRolePermissions;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "projectRole", fetch = FetchType.LAZY)
     private Collection<UserProject> userProjects;
 
     @Deprecated

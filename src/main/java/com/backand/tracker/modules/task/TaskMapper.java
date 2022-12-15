@@ -33,13 +33,11 @@ public class TaskMapper extends AbstractMapper<Task, TaskDto> {
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(Task.class, TaskDto.class)
-                .addMappings(m -> m.skip(TaskDto::setProjectId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(TaskDto.class, Task.class)
-                .addMappings(m -> m.skip(Task::setProject)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(Task.class, TaskDto.class)
+                .addMappings(m -> m.skip(TaskDto::setProjectId)).setPostConverter(toDtoConverter())
                 .addMappings(m -> m.skip(TaskDto::setCreatorId)).setPostConverter(toDtoConverter());
+
         mapper.createTypeMap(TaskDto.class, Task.class)
+                .addMappings(m -> m.skip(Task::setProject)).setPostConverter(toEntityConverter())
                 .addMappings(m -> m.skip(Task::setCreator)).setPostConverter(toEntityConverter());
     }
 

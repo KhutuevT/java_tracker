@@ -36,17 +36,17 @@ public class Task extends AbstractBaseEntity {
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
     private List<TimeSlice> timeSlices;
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
     private Collection<UserTask> userTasks;
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
     private Collection<TaskRole> taskRoles;
 
     @Deprecated

@@ -41,18 +41,13 @@ public class UserProjectMapper extends AbstractMapper<UserProject, UserProjectDt
     @PostConstruct
     public void setMapper() {
         mapper.createTypeMap(UserProject.class, UserProjectDto.class)
-                .addMappings(m -> m.skip(UserProjectDto::setUserId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(UserProjectDto.class, UserProject.class)
-                .addMappings(m -> m.skip(UserProject::setUser)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(UserProject.class, UserProjectDto.class)
-                .addMappings(m -> m.skip(UserProjectDto::setProjectId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(UserProjectDto.class, UserProject.class)
-                .addMappings(m -> m.skip(UserProject::setProject)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(UserProject.class, UserProjectDto.class)
+                .addMappings(m -> m.skip(UserProjectDto::setUserId)).setPostConverter(toDtoConverter())
+                .addMappings(m -> m.skip(UserProjectDto::setProjectId)).setPostConverter(toDtoConverter())
                 .addMappings(m -> m.skip(UserProjectDto::setProjectRoleId)).setPostConverter(toDtoConverter());
+
         mapper.createTypeMap(UserProjectDto.class, UserProject.class)
+                .addMappings(m -> m.skip(UserProject::setUser)).setPostConverter(toEntityConverter())
+                .addMappings(m -> m.skip(UserProject::setProject)).setPostConverter(toEntityConverter())
                 .addMappings(m -> m.skip(UserProject::setProjectRole)).setPostConverter(toEntityConverter());
     }
 

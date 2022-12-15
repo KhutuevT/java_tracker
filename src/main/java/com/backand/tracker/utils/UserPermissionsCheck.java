@@ -31,7 +31,7 @@ public class UserPermissionsCheck {
         for (UserProject userProject : userProjects) {
             if (Objects.equals(userProject.getUser().getId(), user.getId())) {
                 Collection<ProjectRolePermissions> projectRolePermissions =
-                        userProject.getRole().getProjectRolePermissions();
+                        userProject.getProjectRole().getProjectRolePermissions();
 
                 for (ProjectRolePermissions projectRolePermission : projectRolePermissions) {
                     if (projectRolePermission.getProjectPermission() == projectPermission) {
@@ -59,7 +59,7 @@ public class UserPermissionsCheck {
 
         for (UserTask userTask : userTasks) {
             if (Objects.equals(userTask.getUser().getId(), user.getId())) {
-                Collection<TaskRolePermissions> taskRolePermissions = userTask.getRole().getTaskRolePermissions();
+                Collection<TaskRolePermissions> taskRolePermissions = userTask.getTaskRole().getTaskRolePermissions();
 
                 for (TaskRolePermissions taskRolePermission : taskRolePermissions) {
                     if (taskRolePermission.getTaskPermissions() == taskPermission) {

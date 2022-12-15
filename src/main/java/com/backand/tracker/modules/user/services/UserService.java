@@ -6,6 +6,7 @@ public interface UserService {
     User getUser(Long id);
 
     User getUserByUsername(String username);
+
     User createNewUser(User user);
 
     boolean existsByUsername(String username);

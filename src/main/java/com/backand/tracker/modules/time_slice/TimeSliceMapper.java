@@ -35,16 +35,12 @@ public class TimeSliceMapper extends AbstractMapper<TimeSlice, TimeSliceDto> {
     @PostConstruct
     public void setMapper() {
         mapper.createTypeMap(TimeSlice.class, TimeSliceDto.class)
-                .addMappings(m -> m.skip(TimeSliceDto::setUserId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(TimeSliceDto.class, TimeSlice.class)
-                .addMappings(m -> m.skip(TimeSlice::setUser)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(TimeSlice.class, TimeSliceDto.class)
+                .addMappings(m -> m.skip(TimeSliceDto::setUserId)).setPostConverter(toDtoConverter())
                 .addMappings(m -> m.skip(TimeSliceDto::setTaskId)).setPostConverter(toDtoConverter());
+
         mapper.createTypeMap(TimeSliceDto.class, TimeSlice.class)
+                .addMappings(m -> m.skip(TimeSlice::setUser)).setPostConverter(toEntityConverter())
                 .addMappings(m -> m.skip(TimeSlice::setTask)).setPostConverter(toEntityConverter());
-
-
     }
 
     @Override

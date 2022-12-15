@@ -36,13 +36,11 @@ public class ProjectRoleMapper extends AbstractMapper<ProjectRole, ProjectRoleDt
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(ProjectRole.class, ProjectRoleDto.class)
-                .addMappings(m -> m.skip(ProjectRoleDto::setProjectId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(ProjectRoleDto.class, ProjectRole.class)
-                .addMappings(m -> m.skip(ProjectRole::setProject)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(ProjectRole.class, ProjectRoleDto.class)
+                .addMappings(m -> m.skip(ProjectRoleDto::setProjectId)).setPostConverter(toDtoConverter())
                 .addMappings(m -> m.skip(ProjectRoleDto::setCreatorId)).setPostConverter(toDtoConverter());
+
         mapper.createTypeMap(ProjectRoleDto.class, ProjectRole.class)
+                .addMappings(m -> m.skip(ProjectRole::setProject)).setPostConverter(toEntityConverter())
                 .addMappings(m -> m.skip(ProjectRole::setCreator)).setPostConverter(toEntityConverter());
     }
 

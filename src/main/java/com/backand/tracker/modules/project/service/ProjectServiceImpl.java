@@ -63,6 +63,8 @@ public class ProjectServiceImpl implements
                         ProjectPermissionsEnum.READ
                 );
 
+        System.out.println(project.getProjectRoles());
+        System.out.println("-------------------");
         return projectMapper.toDto(project);
     }
 
@@ -87,7 +89,6 @@ public class ProjectServiceImpl implements
     public void addEmployeeInProject(
             User user,
             Long projectId,
-            Long projectOwnerId,
             Long employeeUserId
     ) {
         User employee = userService.getUser(
@@ -109,7 +110,6 @@ public class ProjectServiceImpl implements
     public void deleteEmployeeInProject(
             User user,
             Long projectId,
-            Long projectOwnerId,
             Long employeeUserId
     ) {
         User employee = userService.getUser(employeeUserId);
@@ -127,10 +127,10 @@ public class ProjectServiceImpl implements
                 .deleteUserProject(employee, project);
     }
 
-    public Project getById(Long projectId) {
+    @Override
+    public Project getById(Long id) {
         return projectRepository
-                .getProjectById(projectId).orElseThrow(
-                        () -> new EntityNotFoundException(
-                                "Project not found!"));
+                .getProjectById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found!"));
     }
 }

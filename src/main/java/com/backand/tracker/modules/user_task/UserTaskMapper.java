@@ -44,18 +44,13 @@ public class UserTaskMapper extends AbstractMapper<UserTask, UserTaskDto> {
     @PostConstruct
     public void setMapper() {
         mapper.createTypeMap(UserTask.class, UserTaskDto.class)
-                .addMappings(m -> m.skip(UserTaskDto::setUserId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(UserTaskDto.class, UserTask.class)
-                .addMappings(m -> m.skip(UserTask::setUser)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(UserTask.class, UserTaskDto.class)
-                .addMappings(m -> m.skip(UserTaskDto::setTaskId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(UserTaskDto.class, UserTask.class)
-                .addMappings(m -> m.skip(UserTask::setTask)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(UserTask.class, UserTaskDto.class)
+                .addMappings(m -> m.skip(UserTaskDto::setUserId)).setPostConverter(toDtoConverter())
+                .addMappings(m -> m.skip(UserTaskDto::setTaskId)).setPostConverter(toDtoConverter())
                 .addMappings(m -> m.skip(UserTaskDto::setTaskRoleId)).setPostConverter(toDtoConverter());
+
         mapper.createTypeMap(UserTaskDto.class, UserTask.class)
+                .addMappings(m -> m.skip(UserTask::setUser)).setPostConverter(toEntityConverter())
+                .addMappings(m -> m.skip(UserTask::setTask)).setPostConverter(toEntityConverter())
                 .addMappings(m -> m.skip(UserTask::setTaskRole)).setPostConverter(toEntityConverter());
     }
 

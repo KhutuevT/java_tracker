@@ -32,11 +32,11 @@ public class TaskRole extends AbstractBaseEntity {
     private Task task;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "taskRole", fetch = FetchType.LAZY)
     private Collection<TaskRolePermissions> taskRolePermissions;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "taskRole", fetch = FetchType.LAZY)
     private Collection<UserTask> userTasks;
 
     @Deprecated

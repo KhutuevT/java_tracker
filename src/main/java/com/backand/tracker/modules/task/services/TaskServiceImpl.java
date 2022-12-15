@@ -15,29 +15,22 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final ProjectService projectService;
-    private final TaskService taskService;
-    private final UserProjectService userProjectService;
     private final TaskMapper taskMapper;
 
     @Autowired
     public TaskServiceImpl(
             TaskRepository taskRepository,
             ProjectService projectService,
-            TaskService taskService,
-            UserProjectService userProjectService,
             TaskMapper taskMapper
     ) {
         this.taskRepository = taskRepository;
         this.projectService = projectService;
-        this.taskService = taskService;
-        this.userProjectService = userProjectService;
         this.taskMapper = taskMapper;
     }
 

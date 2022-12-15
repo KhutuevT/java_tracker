@@ -33,13 +33,10 @@ public class TaskRoleMapper extends AbstractMapper<TaskRole, TaskRoleDto> {
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(TaskRole.class, TaskRoleDto.class)
-                .addMappings(m -> m.skip(TaskRoleDto::setTaskId)).setPostConverter(toDtoConverter());
-        mapper.createTypeMap(TaskRoleDto.class, TaskRole.class)
-                .addMappings(m -> m.skip(TaskRole::setTask)).setPostConverter(toEntityConverter());
-
-        mapper.createTypeMap(TaskRole.class, TaskRoleDto.class)
+                .addMappings(m -> m.skip(TaskRoleDto::setTaskId)).setPostConverter(toDtoConverter())
                 .addMappings(m -> m.skip(TaskRoleDto::setCreatorId)).setPostConverter(toDtoConverter());
         mapper.createTypeMap(TaskRoleDto.class, TaskRole.class)
+                .addMappings(m -> m.skip(TaskRole::setTask)).setPostConverter(toEntityConverter())
                 .addMappings(m -> m.skip(TaskRole::setCreator)).setPostConverter(toEntityConverter());
     }
 
