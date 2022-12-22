@@ -14,6 +14,7 @@ import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.user.services.UserService;
 import com.backand.tracker.utils.UserPermissionsCheck;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -34,7 +35,7 @@ public class ProjectServiceImpl implements
             ProjectRepository projectRepository,
             UserProjectService userProjectService,
             UserService userService,
-            ProjectRoleService projectRoleService,
+            @Lazy ProjectRoleService projectRoleService,
             ProjectRolePermissionsService projectRolePermissionsService,
             ProjectMapper projectMapper
     ) {
@@ -82,8 +83,7 @@ public class ProjectServiceImpl implements
     @Override
     public void deleteProject(
             User user,
-            Long projectId,
-            Long projectOwnerUserId
+            Long projectId
     ) {
         Project project = getById(projectId);
         UserPermissionsCheck

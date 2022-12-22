@@ -13,7 +13,7 @@ public interface ProjectService {
     /**
      * Удаляет проект
      */
-    void deleteProject(User user, Long projectId, Long projectOwnerUserId);
+    void deleteProject(User user, Long projectId);
 
     /**
      * Добавить работника в проект.

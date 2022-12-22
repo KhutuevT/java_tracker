@@ -56,6 +56,16 @@ public class ProjectRestControllerV1 {
         return new ResponseEntity<ProjectDto>(project, HttpStatus.OK);
     }
 
+    @DeleteMapping()
+    public ResponseEntity deleteProject(
+            @RequestBody Long projectId,
+            Principal principal
+    ) {
+        User user = userService.getUserByUsername(principal.getName());
+        projectService.deleteProject(user, projectId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PostMapping("/{projectId}/employee")
     public ResponseEntity addEmployeeInProject(
             @PathVariable Long projectId,
