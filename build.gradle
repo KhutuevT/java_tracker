@@ -33,7 +33,7 @@ dependencies {
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation "io.springfox:springfox-boot-starter:3.0.0"
-    compileOnly group: 'org.modelmapper', name: 'modelmapper', version: '2.4.1'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.1'
 }
 
 tasks.named('test') {
