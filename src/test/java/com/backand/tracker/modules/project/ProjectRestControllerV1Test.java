@@ -16,10 +16,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+
+@TestPropertySource(locations = "classpath:application-test.properties")
+@Sql(value = "/sql/delete-all.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = "/sql/create-user-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = "/sql/create-project-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+
 class ProjectRestControllerV1Test {
 
     @Autowired
@@ -46,7 +54,7 @@ class ProjectRestControllerV1Test {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .json("{\"name\":\"Test\",\"descriptions\":\"Test\",\"creatorId\":1,\"tasks\":[],\"userProjects\":[],\"projectRoles\":[]}"));
+                        .json("{\"name\":\"test\",\"descriptions\":\"test\",\"creatorId\":1,\"tasks\":[],\"userProjects\":[],\"projectRoles\":[]}"));
     }
 
     @Test
@@ -55,10 +63,13 @@ class ProjectRestControllerV1Test {
         this.mockMvc
                 .perform(post("/api/v1/projects")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Test2\",\"descriptions\":\"Test\"}") //TODO удалять надо
+                        .content("{\"name\":\"Test2\",\"descriptions\":\"Test\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .json("{\"name\":\"Test2\",\"descriptions\":\"Test\",\"creatorId\":1,\"tasks\":null,\"userProjects\":null,\"projectRoles\":null}"));
+
     }
 
     @Test
