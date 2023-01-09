@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    container_name: db_main
+    restart: always
+    environment:
+      POSTGRES_DB: "itrum_tracker_java"
+      POSTGRES_USER: "itrumadmin"
+      POSTGRES_PASSWORD: "aboba"
+    ports:
+      - "5432:5432"
+
+  test_db:
+    image: postgres
+    container_name: db_test
+    restart: always
+    environment:
+      POSTGRES_DB: "itrum_tracker_java_test"
+      POSTGRES_USER: "itrumadmin"
+      POSTGRES_PASSWORD: "aboba"
+    ports:
+      - "5433:5432"
