@@ -5,13 +5,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -28,6 +36,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @Sql(value = "/sql/create-user-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = "/sql/create-project-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 
+@AutoConfigureRestDocs(outputDir = "build/generated-snippets")
 class ProjectRestControllerV1Test {
 
     @Autowired
@@ -52,6 +61,9 @@ class ProjectRestControllerV1Test {
         this.mockMvc
                 .perform(get("/api/v1/projects/1"))
                 .andDo(print())
+                .andDo(document("{class-name}/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .json("{\"name\":\"test\",\"descriptions\":\"test\",\"creatorId\":1,\"tasks\":[],\"userProjects\":[],\"projectRoles\":[]}"));
@@ -66,24 +78,27 @@ class ProjectRestControllerV1Test {
                         .content("{\"name\":\"Test2\",\"descriptions\":\"Test\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
+                .andDo(document("{class-name}/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .json("{\"name\":\"Test2\",\"descriptions\":\"Test\",\"creatorId\":1,\"tasks\":null,\"userProjects\":null,\"projectRoles\":null}"));
 
     }
 
-    @Test
-    @WithMockUser(username = "timon", password = "timon")
-    void deleteProject() {
-    }
-
-    @Test
-    @WithMockUser(username = "timon", password = "timon")
-    void addEmployeeInProject() {
-    }
-
-    @Test
-    @WithMockUser(username = "timon", password = "timon")
-    void deleteEmployeeInProject() {
-    }
+//    @Test
+//    @WithMockUser(username = "timon", password = "timon")
+//    void deleteProject() {
+//    }
+//
+//    @Test
+//    @WithMockUser(username = "timon", password = "timon")
+//    void addEmployeeInProject() {
+//    }
+//
+//    @Test
+//    @WithMockUser(username = "timon", password = "timon")
+//    void deleteEmployeeInProject() {
+//    }
 }

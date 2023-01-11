@@ -56,35 +56,35 @@ public class ProjectRestControllerV1 {
         return new ResponseEntity<ProjectDto>(project, HttpStatus.OK);
     }
 
-    @DeleteMapping()
-    public ResponseEntity deleteProject(
-            @RequestBody Long projectId,
-            Principal principal
-    ) {
-        User user = userService.getUserByUsername(principal.getName());
-        projectService.deleteProject(user, projectId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    @DeleteMapping()
+//    public ResponseEntity deleteProject(
+//            @RequestBody Long projectId,
+//            Principal principal
+//    ) {
+//        User user = userService.getUserByUsername(principal.getName());
+//        projectService.deleteProject(user, projectId);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 
-    @PostMapping("/{projectId}/employee")
-    public ResponseEntity addEmployeeInProject(
-            @PathVariable Long projectId,
-            @RequestBody Long employeeUserId,
-            Principal principal
-    ) {
-        User user = userService.getUserByUsername(principal.getName());
-        projectService.addEmployeeInProject(user, projectId, employeeUserId);
-        return null;
-    }
-
-    @DeleteMapping("/{projectId}/employee")
-    public ResponseEntity deleteEmployeeInProject(
-            @PathVariable Long projectId,
-            @RequestBody Long employeeUserId,
-            Principal principal
-    ) {
-        User user = userService.getUserByUsername(principal.getName());
-        projectService.deleteEmployeeInProject(user, projectId, employeeUserId);
-        return null;
-    }
+//    @PostMapping("/{projectId}/employee")
+//    public ResponseEntity addEmployeeInProject(
+//            @PathVariable Long projectId,
+//            @RequestBody Long employeeUserId,
+//            Principal principal
+//    ) {
+//        User user = userService.getUserByUsername(principal.getName());
+//        projectService.addEmployeeInProject(user, projectId, employeeUserId);
+//        return null;
+//    }
+//
+//    @DeleteMapping("/{projectId}/employee")
+//    public ResponseEntity deleteEmployeeInProject(
+//            @PathVariable Long projectId,
+//            @RequestBody Long employeeUserId,
+//            Principal principal
+//    ) {
+//        User user = userService.getUserByUsername(principal.getName());
+//        projectService.deleteEmployeeInProject(user, projectId, employeeUserId);
+//        return null;
+//    }
 }

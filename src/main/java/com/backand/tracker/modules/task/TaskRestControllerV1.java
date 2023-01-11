@@ -29,21 +29,6 @@ public class TaskRestControllerV1 {
         this.userRepository = userRepository;
     }
 
-    @GetMapping()
-    ResponseEntity get(
-            @PathVariable
-            Long projectId,
-            Principal principal
-    ) {
-        User user = userRepository
-                .findByUsername(principal.getName()).get();
-
-        List<TaskDto> tasks = taskService
-                .getAllTaskByProjectId(user, projectId);
-
-        return new ResponseEntity(tasks, HttpStatus.OK);
-    }
-
     @GetMapping("/{taskId}")
     ResponseEntity getById(
             @PathVariable
@@ -61,8 +46,23 @@ public class TaskRestControllerV1 {
         return new ResponseEntity(task, HttpStatus.OK);
     }
 
+    @GetMapping()
+    ResponseEntity getAllByProjectId(
+            @PathVariable
+            Long projectId,
+            Principal principal
+    ) {
+        User user = userRepository
+                .findByUsername(principal.getName()).get();
+
+        List<TaskDto> tasks = taskService
+                .getAllTaskByProjectId(user, projectId);
+
+        return new ResponseEntity(tasks, HttpStatus.OK);
+    }
+
     @PostMapping()
-    ResponseEntity add(
+    ResponseEntity createNewTask(
             @PathVariable
             Long projectId,
             @RequestBody
