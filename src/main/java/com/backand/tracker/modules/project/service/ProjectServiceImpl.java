@@ -47,20 +47,40 @@ public class ProjectServiceImpl implements
         this.projectMapper = projectMapper;
     }
 
+//    @Override
+//    public ProjectDto createNewProject(
+//            User user,
+//            String name,
+//            String descriptions,
+//            String image
+//    ) {
+//        Project project = projectRepository
+//                .save(new Project(name, descriptions, user, image));
+//
+//        ProjectRole projectRole = projectRoleService
+//                .createNew(String.valueOf(ProjectPermissionsEnum.READ), user, project.getId());
+//
+//        projectRolePermissionsService
+//                .addNewPermissionInProjectRole(user, projectRole, ProjectPermissionsEnum.READ);
+//
+//        return projectMapper.toDto(project);
+//    }
+
     @Override
-    public ProjectDto createNewProject(
-            User user,
-            String name,
-            String descriptions
-    ) {
-        Project project = projectRepository
-                .save(new Project(name, descriptions, user));
+    public ProjectDto createNewProject(Project project) {
+        Project saveProject = projectRepository.save(project);
 
         ProjectRole projectRole = projectRoleService
-                .createNew(String.valueOf(ProjectPermissionsEnum.READ), user, project.getId());
+                .createNew(
+                        String.valueOf(ProjectPermissionsEnum.READ),
+                        saveProject.getCreator(),
+                        saveProject.getId());
 
-        projectRolePermissionsService
-                .addNewPermissionInProjectRole(user, projectRole, ProjectPermissionsEnum.READ);
+        projectRolePermissionsService.
+                addNewPermissionInProjectRole(
+                        saveProject.getCreator(),
+                        projectRole,
+                        ProjectPermissionsEnum.READ);
 
         return projectMapper.toDto(project);
     }

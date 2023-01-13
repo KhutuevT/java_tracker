@@ -22,7 +22,10 @@ import java.util.Collection;
 @Getter
 public class User extends AbstractBaseEntity {
     @Column(name = "username")
-    String username;
+    private String username;
+
+    @Column(name = "avatar")
+    private String avatar;
 
     @Embedded
     @AttributeOverride(name = "emailAddress", column = @Column(name = "email"))
@@ -57,13 +60,36 @@ public class User extends AbstractBaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<TimeSlice> timeSlices;
 
+    public static class Builder {
+        private String username;
+        private EmailAddress emailAddress;
+        private Password password;
+        private String avatar = "default-user-avatar.png";
+
+        public Builder(String username, EmailAddress emailAddress, Password password) {
+            this.username = username;
+            this.emailAddress = emailAddress;
+            this.password = password;
+        }
+
+        public Builder avatar(String val) {
+            avatar = val;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
+
     @Deprecated
     public User() {
     }
 
-    public User(String name, EmailAddress emailAddress, Password password) {
-        this.username = name;
-        this.emailAddress = emailAddress;
-        this.password = password;
+    private User(Builder builder) {
+        username = builder.username;
+        emailAddress = builder.emailAddress;
+        password = builder.password;
+        avatar = builder.avatar;
     }
 }

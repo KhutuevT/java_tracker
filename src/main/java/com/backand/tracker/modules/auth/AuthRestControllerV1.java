@@ -31,7 +31,7 @@ public class AuthRestControllerV1 {
     public ResponseEntity signup(@RequestBody RegistrationReqDto reqDto) {
         EmailAddress emailAddress = new EmailAddress(reqDto.getEmail());
         Password password = new Password(reqDto.getPassword());
-        User user = new User(reqDto.getUsername(), emailAddress, password);
+        User user = new User.Builder(reqDto.getUsername(), emailAddress, password).build();
 
         authService.registration(user);
         return new ResponseEntity("OK", HttpStatus.OK);

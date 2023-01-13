@@ -6,11 +6,17 @@ import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.project.dto.req.CreateProjectReqDto;
 import com.backand.tracker.modules.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/v1/projects")
@@ -18,6 +24,9 @@ public class ProjectRestControllerV1 {
 
     UserService userService;
     ProjectService projectService;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     ProjectRestControllerV1(
@@ -30,8 +39,7 @@ public class ProjectRestControllerV1 {
 
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectDto> getById(
-            @PathVariable
-            Long projectId,
+            @PathVariable Long projectId,
             Principal principal
     ) {
         User user = userService.getUserByUsername(principal.getName());
@@ -42,18 +50,40 @@ public class ProjectRestControllerV1 {
         return new ResponseEntity<ProjectDto>(project, HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProjectDto> createNewProject(
-            @RequestBody
-            CreateProjectReqDto reqDto,
+            @RequestBody CreateProjectReqDto reqDto,
+            @RequestParam("file") MultipartFile file,
             Principal principal
-    ) {
+    ) throws IOException {
         User user = userService.getUserByUsername(principal.getName());
+        Project project = null;
 
-        ProjectDto project = projectService
-                .createNewProject(user, reqDto.getName(), reqDto.getDescriptions());
+        project = new Project.Builder(reqDto.getName(), user)
+                .descriptions(reqDto.getDescriptions())
+                .build();
 
-        return new ResponseEntity<ProjectDto>(project, HttpStatus.OK);
+        if (file != null) {
+            File uploadDir = new File(uploadPath);
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadPath + "/" + resultFileName));
+
+            project = new Project.Builder(reqDto.getName(), user)
+                    .descriptions(reqDto.getDescriptions())
+                    .image(resultFileName)
+                    .build();
+        }
+
+        ProjectDto savedProject = projectService
+                .createNewProject(project);
+
+        return new ResponseEntity<ProjectDto>(savedProject, HttpStatus.OK);
     }
 
 //    @DeleteMapping()

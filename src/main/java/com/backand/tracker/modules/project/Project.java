@@ -18,12 +18,14 @@ import java.util.Collection;
 @Setter
 @Getter
 public class Project extends AbstractBaseEntity {
-
     @Column(name = "name")
     private String name;
 
     @Column(name = "descriptions")
     private String descriptions;
+
+    @Column(name = "image")
+    private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -44,17 +46,41 @@ public class Project extends AbstractBaseEntity {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private Collection<ProjectRole> projectRoles;
 
+    public static class Builder {
+        private String name;
+        private User creator;
+
+        private String descriptions = "";
+        private String image = "default-project-image.png";
+
+        public Builder(String name, User creator) {
+            this.name = name;
+            this.creator = creator;
+        }
+
+        public Builder descriptions(String val) {
+            descriptions = val;
+            return this;
+        }
+
+        public Builder image(String val) {
+            image = val;
+            return this;
+        }
+
+        public Project build() {
+            return new Project(this);
+        }
+    }
+
     @Deprecated
     public Project() {
     }
 
-    public Project(
-            String name,
-            String descriptions,
-            User creator
-    ) {
-        this.name = name;
-        this.descriptions = descriptions;
-        this.creator = creator;
+    private Project(Builder builder) {
+        name = builder.name;
+        descriptions = builder.descriptions;
+        creator = builder.creator;
+        image = builder.image;
     }
 }

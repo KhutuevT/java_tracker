@@ -8,7 +8,8 @@ public interface ProjectService {
     /**
      * Создаёт новый проект.
      */
-    ProjectDto createNewProject(User user, String name, String descriptions);
+//    ProjectDto createNewProject(User user, String name, String descriptions, String image);
+    ProjectDto createNewProject(Project project);
 
     /**
      * Удаляет проект
