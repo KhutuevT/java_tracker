@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,19 +36,16 @@ public class Task extends AbstractBaseEntity {
     private User creator;
 
     @ToString.Exclude
-    @JsonIgnore
     @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
-    private List<TimeSlice> timeSlices;
+    private List<TimeSlice> timeSlices = new ArrayList();
 
     @ToString.Exclude
-    @JsonIgnore
     @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
-    private Collection<UserTask> userTasks;
+    private Collection<UserTask> userTasks = new ArrayList();
 
     @ToString.Exclude
-    @JsonIgnore
     @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
-    private Collection<TaskRole> taskRoles;
+    private Collection<TaskRole> taskRoles = new ArrayList();
 
     @Deprecated
     public Task() {

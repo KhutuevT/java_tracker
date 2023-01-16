@@ -1,5 +1,6 @@
 package com.backand.tracker.modules.task;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -50,6 +54,17 @@ class TaskRestControllerV1Test {
     @Test
     @WithMockUser(username = "timon", password = "timon")
     void getById() throws Exception {
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("name", "test");
+        responseBody.put("description", "test");
+        responseBody.put("projectId", 1);
+        responseBody.put("creatorId", 1);
+        responseBody.put("timeSlices", new Object[0]);
+        responseBody.put("userTasks", new Object[0]);
+        responseBody.put("taskRoles", new Object[0]);
+        String responseBodyJson = new ObjectMapper().writeValueAsString(responseBody);
+
         this.mockMvc
                 .perform(get("/api/v1/projects/1/tasks/1"))
                 .andDo(print())
@@ -58,12 +73,23 @@ class TaskRestControllerV1Test {
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .json("{\"name\":\"test\",\"description\":\"test\",\"projectId\":1,\"creatorId\":1,\"timeSlices\":[],\"userTasks\":[],\"taskRoles\":[]}"));
+                        .json(responseBodyJson));
     }
 
     @Test
     @WithMockUser(username = "timon", password = "timon")
     void getAllByProjectId() throws Exception {
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("name", "test");
+        responseBody.put("description", "test");
+        responseBody.put("projectId", 1);
+        responseBody.put("creatorId", 1);
+        responseBody.put("timeSlices", new Object[0]);
+        responseBody.put("userTasks", new Object[0]);
+        responseBody.put("taskRoles", new Object[0]);
+        Object[] responseBodyArray = {responseBody};
+        String responseBodyJson = new ObjectMapper().writeValueAsString(responseBodyArray);
+
         this.mockMvc
                 .perform(get("/api/v1/projects/1/tasks"))
                 .andDo(print())
@@ -72,16 +98,31 @@ class TaskRestControllerV1Test {
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .json("[{\"name\":\"test\",\"description\":\"test\",\"projectId\":1,\"creatorId\":1,\"timeSlices\":[],\"userTasks\":[],\"taskRoles\":[]}]"));
+                        .json(responseBodyJson));
     }
 
     @Test
     @WithMockUser(username = "timon", password = "timon")
     void createNewTask() throws Exception {
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("name", "test2");
+        requestBody.put("descriptions", "test2");
+        String requestBodyJson = new ObjectMapper().writeValueAsString(requestBody);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("name", "test2");
+        responseBody.put("description", "test2");
+        responseBody.put("projectId", 1);
+        responseBody.put("creatorId", 1);
+        responseBody.put("timeSlices", new Object[0]);
+        responseBody.put("userTasks", new Object[0]);
+        responseBody.put("taskRoles", new Object[0]);
+        String responseBodyJson = new ObjectMapper().writeValueAsString(responseBody);
+
         this.mockMvc
                 .perform(post("/api/v1/projects/1/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Test2\",\"descriptions\":\"Test\"}")
+                        .content(requestBodyJson)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andDo(document("{class-name}/{method-name}",
@@ -89,6 +130,6 @@ class TaskRestControllerV1Test {
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .json("{\"name\":\"Test2\",\"description\":\"Test\",\"projectId\":1,\"creatorId\":1,\"timeSlices\":null,\"userTasks\":null,\"taskRoles\":null}"));
+                        .json(responseBodyJson));
     }
 }

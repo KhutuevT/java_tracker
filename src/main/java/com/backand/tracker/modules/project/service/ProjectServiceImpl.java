@@ -82,7 +82,7 @@ public class ProjectServiceImpl implements
                         projectRole,
                         ProjectPermissionsEnum.READ);
 
-        return projectMapper.toDto(project);
+        return projectMapper.toDto(saveProject);
     }
 
     @Override

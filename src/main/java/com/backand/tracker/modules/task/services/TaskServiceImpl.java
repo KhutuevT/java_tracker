@@ -107,7 +107,9 @@ public class TaskServiceImpl implements TaskService {
                 project,
                 user
         );
-        return taskMapper.toDto(taskRepository.save(task));
+
+        Task saveTask = taskRepository.save(task);
+        return taskMapper.toDto(saveTask);
     }
 
     @Override

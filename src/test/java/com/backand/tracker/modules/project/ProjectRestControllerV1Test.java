@@ -16,19 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,9 +40,6 @@ class ProjectRestControllerV1Test {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @BeforeEach
     void setUp() {
         System.out.println("---SetUp---");
@@ -60,6 +53,16 @@ class ProjectRestControllerV1Test {
     @Test
     @WithMockUser(username = "timon", password = "timon")
     void getById() throws Exception {
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("name", "test");
+        responseBody.put("descriptions", "test");
+        responseBody.put("creatorId", 1);
+        responseBody.put("tasks", new Object[0]);
+        responseBody.put("userProjects", new Object[0]);
+        responseBody.put("projectRoles", new Object[0]);
+        String responseBodyJson = new ObjectMapper().writeValueAsString(responseBody);
+
         this.mockMvc
                 .perform(get("/api/v1/projects/1"))
                 .andDo(print())
@@ -68,38 +71,48 @@ class ProjectRestControllerV1Test {
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .json("{\"name\":\"test\",\"descriptions\":\"test\",\"creatorId\":1,\"tasks\":[],\"userProjects\":[],\"projectRoles\":[]}"));
+                        .json(responseBodyJson));
     }
 
     @Test
     @WithMockUser(username = "timon", password = "timon")
     void createNewProject() throws Exception {
-        //        this.mockMvc
-//                .perform(post("/api/v1/projects")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"name\":\"Test2\",\"descriptions\":\"Test\"}")
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andDo(document("{class-name}/{method-name}",
-//                        preprocessRequest(prettyPrint()),
-//                        preprocessResponse(prettyPrint())))
-//                .andExpect(status().isOk())
-//                .andExpect(content()
-//                        .json("{\"name\":\"Test2\",\"descriptions\":\"Test\",\"creatorId\":1,\"tasks\":null,\"userProjects\":null,\"projectRoles\":null}"));
-    }
+        MockMultipartFile avatarImage = new MockMultipartFile(
+                "avatarImage",
+                "test.jpg",
+                "image/jpeg",
+                "test image".getBytes());
 
-//    @Test
-//    @WithMockUser(username = "timon", password = "timon")
-//    void deleteProject() {
-//    }
-//
-//    @Test
-//    @WithMockUser(username = "timon", password = "timon")
-//    void addEmployeeInProject() {
-//    }
-//
-//    @Test
-//    @WithMockUser(username = "timon", password = "timon")
-//    void deleteEmployeeInProject() {
-//    }
+
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("name", "test2");
+        requestBody.put("descriptions", "test");
+        String requestBodyJson = new ObjectMapper().writeValueAsString(requestBody);
+
+        MockMultipartFile requestBodyFile = new MockMultipartFile(
+                "reqDto",
+                "null",
+                "application/json",
+                requestBodyJson.getBytes());
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("name", "test2");
+        responseBody.put("descriptions", "test");
+        responseBody.put("creatorId", 1);
+        responseBody.put("tasks", new Object[0]);
+        responseBody.put("userProjects", new Object[0]);
+        responseBody.put("projectRoles", new Object[0]);
+        String responseBodyJson = new ObjectMapper().writeValueAsString(responseBody);
+
+        this.mockMvc
+                .perform(multipart("/api/v1/projects")
+                        .file(avatarImage)
+                        .file(requestBodyFile))
+                .andDo(document("{class-name}/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .json(responseBodyJson));
+    }
 }

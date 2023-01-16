@@ -1,10 +1,7 @@
 package com.backand.tracker.modules.project_role;
 
-import com.backand.tracker.modules.project.Project;
 import com.backand.tracker.modules.project.ProjectRepository;
-import com.backand.tracker.modules.project.dto.res.ProjectDto;
 import com.backand.tracker.modules.project_role.dto.res.ProjectRoleDto;
-import com.backand.tracker.modules.user.User;
 import com.backand.tracker.modules.user.UserRepository;
 import com.backand.tracker.utils.AbstractMapper;
 import org.modelmapper.ModelMapper;

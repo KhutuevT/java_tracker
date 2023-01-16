@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -32,19 +33,16 @@ public class Project extends AbstractBaseEntity {
     private User creator;
 
     @ToString.Exclude
-    @JsonIgnore
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private Collection<Task> tasks;
+    private Collection<Task> tasks = new ArrayList();
 
     @ToString.Exclude
-    @JsonIgnore
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private Collection<UserProject> userProjects;
+    private Collection<UserProject> userProjects = new ArrayList();
 
     @ToString.Exclude
-    @JsonIgnore
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private Collection<ProjectRole> projectRoles;
+    private Collection<ProjectRole> projectRoles = new ArrayList();
 
     public static class Builder {
         private String name;

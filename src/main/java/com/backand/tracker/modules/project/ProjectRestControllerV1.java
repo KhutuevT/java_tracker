@@ -1,9 +1,9 @@
 package com.backand.tracker.modules.project;
 
+import com.backand.tracker.modules.project.dto.req.CreateProjectReqDto;
 import com.backand.tracker.modules.project.dto.res.ProjectDto;
 import com.backand.tracker.modules.project.service.ProjectService;
 import com.backand.tracker.modules.user.User;
-import com.backand.tracker.modules.project.dto.req.CreateProjectReqDto;
 import com.backand.tracker.modules.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,9 +51,9 @@ public class ProjectRestControllerV1 {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ProjectDto> createNewProject(
-            @RequestBody CreateProjectReqDto reqDto,
-            @RequestParam("file") MultipartFile file,
+    public ResponseEntity<?> createNewProject(
+            @RequestPart CreateProjectReqDto reqDto,
+            @RequestPart MultipartFile avatarImage,
             Principal principal
     ) throws IOException {
         User user = userService.getUserByUsername(principal.getName());
@@ -63,7 +63,7 @@ public class ProjectRestControllerV1 {
                 .descriptions(reqDto.getDescriptions())
                 .build();
 
-        if (file != null) {
+        if (avatarImage != null) {
             File uploadDir = new File(uploadPath);
 
             if (!uploadDir.exists()) {
@@ -71,8 +71,8 @@ public class ProjectRestControllerV1 {
             }
 
             String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
+            String resultFileName = uuidFile + "." + avatarImage.getOriginalFilename();
+            avatarImage.transferTo(new File(uploadPath + "/" + resultFileName));
 
             project = new Project.Builder(reqDto.getName(), user)
                     .descriptions(reqDto.getDescriptions())
